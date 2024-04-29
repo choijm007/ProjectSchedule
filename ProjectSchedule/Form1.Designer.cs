@@ -58,6 +58,7 @@
             this.addEditButton.TabIndex = 1;
             this.addEditButton.Text = "일정 추가 및 수정";
             this.addEditButton.UseVisualStyleBackColor = true;
+            this.addEditButton.Click += new System.EventHandler(this.addEditButton_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -73,7 +74,7 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(35, 63);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 575F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(609, 576);
             this.tableLayoutPanel1.TabIndex = 2;
             // 

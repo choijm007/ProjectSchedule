@@ -37,5 +37,12 @@ namespace ProjectSchedule
 
             
         }
+
+        private void addEditButton_Click(object sender, EventArgs e)
+        {
+            AddEditForm aeForm = new AddEditForm();
+            DialogResult dResult = aeForm.ShowDialog();
+
+        }
     }
 }
