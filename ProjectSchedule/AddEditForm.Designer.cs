@@ -38,6 +38,7 @@
             this.timeLabel = new System.Windows.Forms.Label();
             this.nameLabel = new System.Windows.Forms.Label();
             this.userMemoLabel = new System.Windows.Forms.Label();
+            this.addClassButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // monthCalendar1
@@ -57,25 +58,27 @@
             // 
             // addButton
             // 
-            this.addButton.Location = new System.Drawing.Point(251, 389);
+            this.addButton.Location = new System.Drawing.Point(247, 389);
             this.addButton.Name = "addButton";
             this.addButton.Size = new System.Drawing.Size(75, 23);
             this.addButton.TabIndex = 3;
             this.addButton.Text = "추가";
             this.addButton.UseVisualStyleBackColor = true;
+            this.addButton.Click += new System.EventHandler(this.addButton_Click);
             // 
             // editButton
             // 
-            this.editButton.Location = new System.Drawing.Point(374, 389);
+            this.editButton.Location = new System.Drawing.Point(419, 389);
             this.editButton.Name = "editButton";
             this.editButton.Size = new System.Drawing.Size(75, 23);
             this.editButton.TabIndex = 4;
             this.editButton.Text = "수정";
             this.editButton.UseVisualStyleBackColor = true;
+            this.editButton.Click += new System.EventHandler(this.editButton_Click);
             // 
             // deleteButton
             // 
-            this.deleteButton.Location = new System.Drawing.Point(495, 389);
+            this.deleteButton.Location = new System.Drawing.Point(505, 389);
             this.deleteButton.Name = "deleteButton";
             this.deleteButton.Size = new System.Drawing.Size(75, 23);
             this.deleteButton.TabIndex = 5;
@@ -126,11 +129,22 @@
             this.userMemoLabel.TabIndex = 10;
             this.userMemoLabel.Text = "메모 :";
             // 
+            // addClassButton
+            // 
+            this.addClassButton.Location = new System.Drawing.Point(333, 389);
+            this.addClassButton.Name = "addClassButton";
+            this.addClassButton.Size = new System.Drawing.Size(75, 23);
+            this.addClassButton.TabIndex = 11;
+            this.addClassButton.Text = "수업 추가";
+            this.addClassButton.UseVisualStyleBackColor = true;
+            this.addClassButton.Click += new System.EventHandler(this.addClassButton_Click);
+            // 
             // AddEditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(592, 424);
+            this.Controls.Add(this.addClassButton);
             this.Controls.Add(this.userMemoLabel);
             this.Controls.Add(this.nameLabel);
             this.Controls.Add(this.timeLabel);
@@ -160,5 +174,6 @@
         private System.Windows.Forms.Label timeLabel;
         private System.Windows.Forms.Label nameLabel;
         private System.Windows.Forms.Label userMemoLabel;
+        private System.Windows.Forms.Button addClassButton;
     }
 }

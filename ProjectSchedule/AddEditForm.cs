@@ -16,5 +16,23 @@ namespace ProjectSchedule
         {
             InitializeComponent();
         }
+
+        private void addButton_Click(object sender, EventArgs e)
+        {
+            AddForm aForm = new AddForm();
+            DialogResult dResult = aForm.ShowDialog();
+        }
+
+        private void editButton_Click(object sender, EventArgs e)
+        {
+            // 수정하고자 하는 일정이 수업일 경우 AddClassForm 을 열도록 수정할 예정
+            AddForm aForm = new AddForm();
+            DialogResult dResult = aForm.ShowDialog();
+        }
+
+        private void addClassButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

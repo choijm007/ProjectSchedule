@@ -39,6 +39,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.deadlineListBox = new System.Windows.Forms.ListBox();
+            this.takingClassesListView = new System.Windows.Forms.ListView();
             this.SuspendLayout();
             // 
             // klasButton
@@ -146,18 +147,26 @@
             this.deadlineListBox.Font = new System.Drawing.Font("굴림", 12F);
             this.deadlineListBox.FormattingEnabled = true;
             this.deadlineListBox.ItemHeight = 16;
-            this.deadlineListBox.Items.AddRange(new object[] {
-            " "});
             this.deadlineListBox.Location = new System.Drawing.Point(13, 657);
             this.deadlineListBox.Name = "deadlineListBox";
-            this.deadlineListBox.Size = new System.Drawing.Size(631, 228);
+            this.deadlineListBox.Size = new System.Drawing.Size(631, 148);
             this.deadlineListBox.TabIndex = 11;
+            // 
+            // takingClassesListView
+            // 
+            this.takingClassesListView.HideSelection = false;
+            this.takingClassesListView.Location = new System.Drawing.Point(13, 811);
+            this.takingClassesListView.Name = "takingClassesListView";
+            this.takingClassesListView.Size = new System.Drawing.Size(631, 131);
+            this.takingClassesListView.TabIndex = 12;
+            this.takingClassesListView.UseCompatibleStateImageBehavior = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(660, 895);
+            this.ClientSize = new System.Drawing.Size(660, 950);
+            this.Controls.Add(this.takingClassesListView);
             this.Controls.Add(this.deadlineListBox);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -188,6 +197,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ListBox deadlineListBox;
+        private System.Windows.Forms.ListView takingClassesListView;
     }
 }
 

@@ -52,6 +52,12 @@
     <Compile Include="AddEditForm.Designer.cs">
       <DependentUpon>AddEditForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="AddForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddForm.Designer.cs">
+      <DependentUpon>AddForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -63,8 +69,17 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepeatListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RepeatListForm.Designer.cs">
+      <DependentUpon>RepeatListForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AddEditForm.resx">
       <DependentUpon>AddEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AddForm.resx">
+      <DependentUpon>AddForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -78,6 +93,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="RepeatListForm.resx">
+      <DependentUpon>RepeatListForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
