@@ -28,20 +28,165 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.klasButton = new System.Windows.Forms.Button();
+            this.addEditButton = new System.Windows.Forms.Button();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.deadlineListBox = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
+            // 
+            // klasButton
+            // 
+            this.klasButton.Location = new System.Drawing.Point(13, 13);
+            this.klasButton.Name = "klasButton";
+            this.klasButton.Size = new System.Drawing.Size(121, 23);
+            this.klasButton.TabIndex = 0;
+            this.klasButton.Text = "klas에서 불러오기";
+            this.klasButton.UseVisualStyleBackColor = true;
+            // 
+            // addEditButton
+            // 
+            this.addEditButton.Location = new System.Drawing.Point(154, 13);
+            this.addEditButton.Name = "addEditButton";
+            this.addEditButton.Size = new System.Drawing.Size(118, 23);
+            this.addEditButton.TabIndex = 1;
+            this.addEditButton.Text = "일정 추가 및 수정";
+            this.addEditButton.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.tableLayoutPanel1.ColumnCount = 7;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(35, 63);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(609, 576);
+            this.tableLayoutPanel1.TabIndex = 2;
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(35, 48);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(87, 12);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "월요일";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label2
+            // 
+            this.label2.Location = new System.Drawing.Point(122, 48);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(87, 12);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "화요일";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label3
+            // 
+            this.label3.Location = new System.Drawing.Point(209, 48);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(87, 12);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "수요일";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label4
+            // 
+            this.label4.Location = new System.Drawing.Point(296, 48);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(87, 12);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "목요일";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label5
+            // 
+            this.label5.Location = new System.Drawing.Point(383, 48);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(87, 12);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "금요일";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label6
+            // 
+            this.label6.Location = new System.Drawing.Point(470, 48);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(87, 12);
+            this.label6.TabIndex = 9;
+            this.label6.Text = "토요일";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label7
+            // 
+            this.label7.Location = new System.Drawing.Point(557, 48);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(87, 12);
+            this.label7.TabIndex = 10;
+            this.label7.Text = "일요일";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // deadlineListBox
+            // 
+            this.deadlineListBox.Font = new System.Drawing.Font("굴림", 12F);
+            this.deadlineListBox.FormattingEnabled = true;
+            this.deadlineListBox.ItemHeight = 16;
+            this.deadlineListBox.Items.AddRange(new object[] {
+            " "});
+            this.deadlineListBox.Location = new System.Drawing.Point(13, 657);
+            this.deadlineListBox.Name = "deadlineListBox";
+            this.deadlineListBox.Size = new System.Drawing.Size(631, 228);
+            this.deadlineListBox.TabIndex = 11;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(660, 895);
+            this.Controls.Add(this.deadlineListBox);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.tableLayoutPanel1);
+            this.Controls.Add(this.addEditButton);
+            this.Controls.Add(this.klasButton);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "ProjectSchedule";
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.Button klasButton;
+        private System.Windows.Forms.Button addEditButton;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ListBox deadlineListBox;
     }
 }
 
