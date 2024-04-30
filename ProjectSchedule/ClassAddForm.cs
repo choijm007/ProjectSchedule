@@ -10,16 +10,20 @@ using System.Windows.Forms;
 
 namespace ProjectSchedule
 {
-    public partial class AddForm : Form
+    public partial class ClassAddForm : Form
     {
-        public AddForm()
+        public ClassAddForm()
         {
             InitializeComponent();
-            dateTimePicker1.Format = DateTimePickerFormat.Custom;
-            dateTimePicker1.CustomFormat = "MMMMd일 dddd";
         }
 
         private void button2_Click(object sender, EventArgs e)
+        {
+            RepeatListForm rForm = new RepeatListForm();
+            DialogResult dResult = rForm.ShowDialog();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
         {
             RepeatListForm rForm = new RepeatListForm();
             DialogResult dResult = rForm.ShowDialog();

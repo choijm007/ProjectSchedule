@@ -32,7 +32,8 @@ namespace ProjectSchedule
 
         private void addClassButton_Click(object sender, EventArgs e)
         {
-
+            ClassAddForm cForm = new ClassAddForm();
+            DialogResult dResult = cForm.ShowDialog();
         }
     }
 }
