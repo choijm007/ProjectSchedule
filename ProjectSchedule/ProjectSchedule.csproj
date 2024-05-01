@@ -64,6 +64,9 @@
     <Compile Include="ClassAddForm.Designer.cs">
       <DependentUpon>ClassAddForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="EnableChange.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
