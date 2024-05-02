@@ -122,6 +122,7 @@
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(233, 21);
             this.nameTextBox.TabIndex = 5;
+            this.nameTextBox.TextChanged += new System.EventHandler(this.nameTextBox_TextChanged);
             // 
             // repeatRangePicker2
             // 

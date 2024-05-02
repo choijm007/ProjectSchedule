@@ -30,7 +30,7 @@
         {
             this.nameTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
+            this.label반복 = new System.Windows.Forms.Label();
             this.repeatViewButton = new System.Windows.Forms.Button();
             this.repeatAddButton = new System.Windows.Forms.Button();
             this.label14 = new System.Windows.Forms.Label();
@@ -52,7 +52,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.userMemoTextBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.todoLabel = new System.Windows.Forms.Label();
             this.todoCategory = new System.Windows.Forms.ComboBox();
             this.todoNameTextBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -69,6 +69,8 @@
             this.todoViewButton = new System.Windows.Forms.Button();
             this.applyButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
+            this.errorLabel = new System.Windows.Forms.Label();
+            this.todoErrorLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // nameTextBox
@@ -77,6 +79,7 @@
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(233, 21);
             this.nameTextBox.TabIndex = 7;
+            this.nameTextBox.TextChanged += new System.EventHandler(this.nameTextBox_TextChanged);
             // 
             // label1
             // 
@@ -87,14 +90,14 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "이름 :";
             // 
-            // label20
+            // label반복
             // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(11, 54);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(37, 12);
-            this.label20.TabIndex = 60;
-            this.label20.Text = "반복 :";
+            this.label반복.AutoSize = true;
+            this.label반복.Location = new System.Drawing.Point(11, 54);
+            this.label반복.Name = "label반복";
+            this.label반복.Size = new System.Drawing.Size(37, 12);
+            this.label반복.TabIndex = 60;
+            this.label반복.Text = "반복 :";
             // 
             // repeatViewButton
             // 
@@ -148,6 +151,7 @@
             this.repeatMM2.Name = "repeatMM2";
             this.repeatMM2.Size = new System.Drawing.Size(60, 20);
             this.repeatMM2.TabIndex = 55;
+            this.repeatMM2.SelectedIndexChanged += new System.EventHandler(this.valueChanged);
             // 
             // repeatHH2
             // 
@@ -183,6 +187,7 @@
             this.repeatHH2.Name = "repeatHH2";
             this.repeatHH2.Size = new System.Drawing.Size(60, 20);
             this.repeatHH2.TabIndex = 54;
+            this.repeatHH2.SelectedIndexChanged += new System.EventHandler(this.valueChanged);
             // 
             // label16
             // 
@@ -217,6 +222,7 @@
             this.repeatMM1.Name = "repeatMM1";
             this.repeatMM1.Size = new System.Drawing.Size(60, 20);
             this.repeatMM1.TabIndex = 51;
+            this.repeatMM1.SelectedIndexChanged += new System.EventHandler(this.valueChanged);
             // 
             // repeatHH1
             // 
@@ -252,6 +258,7 @@
             this.repeatHH1.Name = "repeatHH1";
             this.repeatHH1.Size = new System.Drawing.Size(60, 20);
             this.repeatHH1.TabIndex = 50;
+            this.repeatHH1.SelectedIndexChanged += new System.EventHandler(this.valueChanged);
             // 
             // label18
             // 
@@ -273,10 +280,11 @@
             // 
             // repeatDatePicker
             // 
-            this.repeatDatePicker.Location = new System.Drawing.Point(139, 50);
+            this.repeatDatePicker.Location = new System.Drawing.Point(133, 49);
             this.repeatDatePicker.Name = "repeatDatePicker";
             this.repeatDatePicker.Size = new System.Drawing.Size(179, 21);
             this.repeatDatePicker.TabIndex = 47;
+            this.repeatDatePicker.ValueChanged += new System.EventHandler(this.valueChanged);
             // 
             // repeatCategory
             // 
@@ -290,6 +298,7 @@
             this.repeatCategory.Name = "repeatCategory";
             this.repeatCategory.Size = new System.Drawing.Size(61, 20);
             this.repeatCategory.TabIndex = 46;
+            this.repeatCategory.SelectedIndexChanged += new System.EventHandler(this.repeatCategory_SelectedIndexChanged);
             // 
             // label8
             // 
@@ -315,6 +324,7 @@
             this.repeatRangePicker2.Name = "repeatRangePicker2";
             this.repeatRangePicker2.Size = new System.Drawing.Size(176, 21);
             this.repeatRangePicker2.TabIndex = 43;
+            this.repeatRangePicker2.ValueChanged += new System.EventHandler(this.valueChanged);
             // 
             // repeatRangePicker1
             // 
@@ -322,6 +332,7 @@
             this.repeatRangePicker1.Name = "repeatRangePicker1";
             this.repeatRangePicker1.Size = new System.Drawing.Size(179, 21);
             this.repeatRangePicker1.TabIndex = 42;
+            this.repeatRangePicker1.ValueChanged += new System.EventHandler(this.valueChanged);
             // 
             // label3
             // 
@@ -349,14 +360,14 @@
             this.label5.TabIndex = 61;
             this.label5.Text = "메모 :";
             // 
-            // label2
+            // todoLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(10, 320);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(117, 12);
-            this.label2.TabIndex = 63;
-            this.label2.Text = "과제, 시험 등의 일정";
+            this.todoLabel.AutoSize = true;
+            this.todoLabel.Location = new System.Drawing.Point(10, 320);
+            this.todoLabel.Name = "todoLabel";
+            this.todoLabel.Size = new System.Drawing.Size(117, 12);
+            this.todoLabel.TabIndex = 63;
+            this.todoLabel.Text = "과제, 시험 등의 일정";
             // 
             // todoCategory
             // 
@@ -377,6 +388,7 @@
             this.todoNameTextBox.Name = "todoNameTextBox";
             this.todoNameTextBox.Size = new System.Drawing.Size(233, 21);
             this.todoNameTextBox.TabIndex = 66;
+            this.todoNameTextBox.TextChanged += new System.EventHandler(this.todoNameTextBox_TextChanged);
             // 
             // label4
             // 
@@ -402,6 +414,7 @@
             this.todoDeadlinePicker.Name = "todoDeadlinePicker";
             this.todoDeadlinePicker.Size = new System.Drawing.Size(181, 21);
             this.todoDeadlinePicker.TabIndex = 68;
+            this.todoDeadlinePicker.ValueChanged += new System.EventHandler(this.todoValueChanged);
             // 
             // label9
             // 
@@ -436,6 +449,7 @@
             this.todoDeadlineMM.Name = "todoDeadlineMM";
             this.todoDeadlineMM.Size = new System.Drawing.Size(60, 20);
             this.todoDeadlineMM.TabIndex = 71;
+            this.todoDeadlineMM.SelectedIndexChanged += new System.EventHandler(this.todoValueChanged);
             // 
             // todoDeadlineHH
             // 
@@ -471,6 +485,7 @@
             this.todoDeadlineHH.Name = "todoDeadlineHH";
             this.todoDeadlineHH.Size = new System.Drawing.Size(60, 20);
             this.todoDeadlineHH.TabIndex = 70;
+            this.todoDeadlineHH.SelectedIndexChanged += new System.EventHandler(this.todoValueChanged);
             // 
             // label11
             // 
@@ -535,11 +550,29 @@
             this.cancelButton.Text = "취소";
             this.cancelButton.UseVisualStyleBackColor = true;
             // 
+            // errorLabel
+            // 
+            this.errorLabel.AutoSize = true;
+            this.errorLabel.Location = new System.Drawing.Point(334, 21);
+            this.errorLabel.Name = "errorLabel";
+            this.errorLabel.Size = new System.Drawing.Size(0, 12);
+            this.errorLabel.TabIndex = 80;
+            // 
+            // todoErrorLabel
+            // 
+            this.todoErrorLabel.AutoSize = true;
+            this.todoErrorLabel.Location = new System.Drawing.Point(390, 324);
+            this.todoErrorLabel.Name = "todoErrorLabel";
+            this.todoErrorLabel.Size = new System.Drawing.Size(0, 12);
+            this.todoErrorLabel.TabIndex = 81;
+            // 
             // ClassAddForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(552, 586);
+            this.Controls.Add(this.todoErrorLabel);
+            this.Controls.Add(this.errorLabel);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.applyButton);
             this.Controls.Add(this.todoViewButton);
@@ -556,10 +589,10 @@
             this.Controls.Add(this.todoNameTextBox);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.todoCategory);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.todoLabel);
             this.Controls.Add(this.userMemoTextBox);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.label20);
+            this.Controls.Add(this.label반복);
             this.Controls.Add(this.repeatViewButton);
             this.Controls.Add(this.repeatAddButton);
             this.Controls.Add(this.label14);
@@ -592,7 +625,7 @@
 
         private System.Windows.Forms.TextBox nameTextBox;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label반복;
         private System.Windows.Forms.Button repeatViewButton;
         private System.Windows.Forms.Button repeatAddButton;
         private System.Windows.Forms.Label label14;
@@ -614,7 +647,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox userMemoTextBox;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label todoLabel;
         private System.Windows.Forms.ComboBox todoCategory;
         private System.Windows.Forms.TextBox todoNameTextBox;
         private System.Windows.Forms.Label label4;
@@ -631,5 +664,7 @@
         private System.Windows.Forms.Button todoViewButton;
         private System.Windows.Forms.Button applyButton;
         private System.Windows.Forms.Button cancelButton;
+        private System.Windows.Forms.Label errorLabel;
+        private System.Windows.Forms.Label todoErrorLabel;
     }
 }

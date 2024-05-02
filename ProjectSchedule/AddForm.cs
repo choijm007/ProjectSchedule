@@ -52,11 +52,11 @@ namespace ProjectSchedule
 
         private void repeatCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (repeatCategory.SelectedIndex == 0)
+            if (repeatCategory.SelectedIndex == 0)  // 매주
                 repeatDatePicker.CustomFormat = "dddd";
-            else if (repeatCategory.SelectedIndex == 1)
+            else if (repeatCategory.SelectedIndex == 1) // 매달
                 repeatDatePicker.CustomFormat = "d일";
-            else if (repeatCategory.SelectedIndex == 2)
+            else if (repeatCategory.SelectedIndex == 2) // 매년
                 repeatDatePicker.CustomFormat = "MMMMd일";
 
             repeatEnableChange(true);
@@ -66,9 +66,6 @@ namespace ProjectSchedule
         private void valueChanged(object sender, EventArgs e)
         {
             scheduleCategory.Enabled = false;
-
-            if (!((sender == repeatRangePicker1) || (sender == repeatRangePicker2)))
-                repeatCategory.Enabled = false;
 
             if (alertCheck()) // 1회성 알람
             {
@@ -122,6 +119,7 @@ namespace ProjectSchedule
                     {
                         errorLabel.Text = "이름 없음";
                         applyButton.Enabled = false;
+                        repeatAddButton.Enabled = true;
                     }
                     else
                     {
@@ -156,8 +154,11 @@ namespace ProjectSchedule
         private bool selectedRepeatTime()
         {
             DateTime datePartEnd = repeatRangePicker2.Value.Date;
+            DateTime datePartStart = repeatRangePicker1.Value.Date;
             TimeSpan timePart1 = new TimeSpan(int.Parse(repeatHH1.SelectedItem.ToString()), int.Parse(repeatMM1.SelectedItem.ToString()), 0);
             TimeSpan timePart2 = new TimeSpan(int.Parse(repeatHH2.SelectedItem.ToString()), int.Parse(repeatMM2.SelectedItem.ToString()), 0);
+
+            if (DateTime.Compare(datePartStart, datePartEnd) != -1) return false;
 
             if (DateTime.Compare(datePartEnd, DateTime.Now) != 1) return false;
 
@@ -187,6 +188,16 @@ namespace ProjectSchedule
                 && repeatMM1.SelectedIndex != -1
                 && repeatHH2.SelectedIndex != -1
                 && repeatMM2.SelectedIndex != -1;
+        }
+
+        private void nameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(nameTextBox.Text))
+            {
+                errorLabel.Text = "이름 없음";
+                return;
+            }
+            errorLabel.Text = string.Empty;
         }
     }
 }
