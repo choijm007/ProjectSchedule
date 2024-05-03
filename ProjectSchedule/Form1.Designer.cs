@@ -50,6 +50,7 @@
             this.klasButton.TabIndex = 0;
             this.klasButton.Text = "klas에서 불러오기";
             this.klasButton.UseVisualStyleBackColor = true;
+            this.klasButton.Click += new System.EventHandler(this.klasButton_Click);
             // 
             // addEditButton
             // 
@@ -75,7 +76,7 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(35, 63);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 575F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 576F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(609, 576);
             this.tableLayoutPanel1.TabIndex = 2;
             // 

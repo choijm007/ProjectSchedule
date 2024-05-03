@@ -44,5 +44,12 @@ namespace ProjectSchedule
             DialogResult dResult = aeForm.ShowDialog();
 
         }
+
+        private void klasButton_Click(object sender, EventArgs e)
+        {
+            GetSubject subject = new GetSubject();
+
+            subject.ShowDialog();
+        }
     }
 }
