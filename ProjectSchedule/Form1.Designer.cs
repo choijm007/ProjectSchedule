@@ -40,6 +40,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.deadlineListBox = new System.Windows.Forms.ListBox();
             this.takingClassesListView = new System.Windows.Forms.ListView();
+            this.btOpenWeatherForm = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // klasButton
@@ -76,7 +77,7 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(35, 63);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 576F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 578F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(609, 576);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
@@ -162,11 +163,23 @@
             this.takingClassesListView.TabIndex = 12;
             this.takingClassesListView.UseCompatibleStateImageBehavior = false;
             // 
+            // btOpenWeatherForm
+            // 
+            this.btOpenWeatherForm.Enabled = false;
+            this.btOpenWeatherForm.Location = new System.Drawing.Point(289, 13);
+            this.btOpenWeatherForm.Name = "btOpenWeatherForm";
+            this.btOpenWeatherForm.Size = new System.Drawing.Size(79, 23);
+            this.btOpenWeatherForm.TabIndex = 14;
+            this.btOpenWeatherForm.Text = "날씨 정보";
+            this.btOpenWeatherForm.UseVisualStyleBackColor = true;
+            this.btOpenWeatherForm.Click += new System.EventHandler(this.btOpenWeatherForm_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(660, 950);
+            this.Controls.Add(this.btOpenWeatherForm);
             this.Controls.Add(this.takingClassesListView);
             this.Controls.Add(this.deadlineListBox);
             this.Controls.Add(this.label7);
@@ -181,6 +194,7 @@
             this.Controls.Add(this.klasButton);
             this.Name = "Form1";
             this.Text = "ProjectSchedule";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
 
         }
@@ -199,6 +213,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ListBox deadlineListBox;
         private System.Windows.Forms.ListView takingClassesListView;
+        private System.Windows.Forms.Button btOpenWeatherForm;
     }
 }
 

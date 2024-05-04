@@ -1,12 +1,21 @@
-﻿using System;
+﻿using ProjectSchedule.Weather;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Security.Policy;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Media.Animation;
+using System.Windows.Shell;
+using System.Xml;
 
 namespace ProjectSchedule
 {
@@ -34,7 +43,7 @@ namespace ProjectSchedule
                 this.Controls.Add(newLabel); // 폼에 레이블 추가
             }
 
-
+            InitList(); // 리스트 초기화
             
         }
 
@@ -51,5 +60,242 @@ namespace ProjectSchedule
 
             subject.ShowDialog();
         }
+
+        #region Weather 변수
+        public static bool isWeatherOpen = false; // 날씨 창 하나만 열리게 하기
+        string url = string.Empty;
+        // 단기예보
+        static List<List<string>> weatherInfo1; // 오늘
+        static List<List<string>> weatherInfo2; // 내일
+        static List<List<string>> weatherInfo3; // 모레
+        // 중기예보
+        static List<string> midRain;
+        static List<string> midWeather;
+        static List<string> midTemp;
+        #endregion
+
+        private void btOpenWeatherForm_Click(object sender, EventArgs e)
+        {
+            if(isWeatherOpen == false)
+            {
+                isWeatherOpen = true;
+                Weather.WeatherForm weatherForm = new Weather.WeatherForm();
+                weatherForm.Show();
+            }            
+        }
+
+        private void InitList()
+        {
+            weatherInfo1 = new List<List<string>>();
+            weatherInfo2 = new List<List<string>>();
+            weatherInfo3 = new List<List<string>>();
+            midRain = new List<string>();
+            midWeather = new List<string>();
+            midTemp = new List<string>();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            Thread getWeatherInfo = new Thread(getAPI);
+            getWeatherInfo.Start();
+        }
+
+        public void getAPI()
+        {
+            getVilageFcst();
+            getMidFcst();
+
+            MessageBox.Show("API 수신 성공", "테스트");
+            btOpenWeatherForm.Enabled = true;
+        }
+
+        private void getVilageFcst() // 단기예보
+        {
+            // 단기예보조회
+            url = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
+            url += "?ServiceKey=" + "p6DmSuJ8xqCPAMgABBFMeYCk%2BmC%2FmibL769%2FJOalQ0GwVG3DQaGjIglUEgWhh5OEKc%2BLnKVV2XtrnBj3i08CvA%3D%3D";
+            url += "&numOfRows=1000";
+            url += "&pageNo=1";
+            url += "&dataType=XML";
+            url += "&base_date=" + DateTime.Today.AddDays(-1).ToString("yyyyMMdd");
+            url += "&base_time=2300";
+            url += "&nx=61"; // 서울특별시 노원구 월계동 좌표
+            url += "&ny=128";
+
+            XmlDocument xml;
+            XmlNode header;
+            do
+            {
+                var request = (HttpWebRequest)WebRequest.Create(url);
+                request.Method = "GET";
+
+                string results = string.Empty;
+                HttpWebResponse response;
+                using (response = request.GetResponse() as HttpWebResponse)
+                {
+                    StreamReader reader = new StreamReader(response.GetResponseStream());
+                    results = reader.ReadToEnd();
+                }
+
+                xml = new XmlDocument();
+                xml.LoadXml(results);
+                header = xml.SelectSingleNode("response/header");
+            } while (header == null);
+
+            if (header.ChildNodes[0].InnerText == "00")
+            {
+                XmlNode body = xml.SelectSingleNode("response/body/items");
+
+                foreach (XmlNode node in body.ChildNodes)
+                {
+                    if (node["fcstDate"].InnerText == DateTime.Today.ToString("yyyyMMdd"))
+                    { // 오늘 날씨
+                        int time = int.Parse(node["fcstTime"].InnerText.Substring(0, 2));
+                        if (weatherInfo1.Count < time + 1)
+                        {
+                            weatherInfo1.Add(new List<string>());
+                        }
+                        weatherInfo1[time].Add(node["fcstValue"].InnerText);
+                    }
+                    else if (node["fcstDate"].InnerText == DateTime.Today.AddDays(1).ToString("yyyyMMdd"))
+                    { // 내일 날씨
+                        int time = int.Parse(node["fcstTime"].InnerText.Substring(0, 2));
+                        if (weatherInfo2.Count < time + 1)
+                        {
+                            weatherInfo2.Add(new List<string>());
+                        }
+                        weatherInfo2[time].Add(node["fcstValue"].InnerText);
+                    }
+                    else if (node["fcstDate"].InnerText == DateTime.Today.AddDays(2).ToString("yyyyMMdd"))
+                    { // 모레 날씨
+                        int time = int.Parse(node["fcstTime"].InnerText.Substring(0, 2));
+                        if (weatherInfo3.Count < time + 1)
+                        {
+                            weatherInfo3.Add(new List<string>());
+                        }
+                        weatherInfo3[time].Add(node["fcstValue"].InnerText);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("에러 코드 : " + header.ChildNodes[0].InnerText + '\n' + header.ChildNodes[1].InnerText,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void getMidFcst() // 중기예보
+        {
+            // 중기육상예보조회
+            url = "http://apis.data.go.kr/1360000/MidFcstInfoService/getMidLandFcst";
+            url += "?ServiceKey=" + "p6DmSuJ8xqCPAMgABBFMeYCk%2BmC%2FmibL769%2FJOalQ0GwVG3DQaGjIglUEgWhh5OEKc%2BLnKVV2XtrnBj3i08CvA%3D%3D";
+            url += "&numOfRows=1000";
+            url += "&pageNo=1";
+            url += "&dataType=XML";
+            url += "&regId=11B00000";
+            url += "&tmFc=" + DateTime.Today.ToString("yyyyMMdd") + "0600";
+
+            var request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = "GET";
+
+            string results = string.Empty;
+            HttpWebResponse response;
+            using (response = request.GetResponse() as HttpWebResponse)
+            {
+                StreamReader reader = new StreamReader(response.GetResponseStream());
+                results = reader.ReadToEnd();
+            }
+
+            XmlDocument xml = new XmlDocument();
+            xml.LoadXml(results);
+            XmlNode header = xml.SelectSingleNode("response/header");
+
+            if (header.ChildNodes[0].InnerText == "00")
+            {
+                XmlNode body = xml.SelectSingleNode("response/body/items/item");
+                XmlNodeList node = body.ChildNodes;
+
+                for (int i = 0; i < 13; i++)
+                {
+                    midRain.Add(node[i + 1].InnerText);
+                    midWeather.Add(node[i + 14].InnerText);
+                }
+            }
+            else
+            {
+                MessageBox.Show("에러 코드 : " + header.ChildNodes[0].InnerText + '\n' + header.ChildNodes[1].InnerText,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            // 중기기온조회
+            url = "http://apis.data.go.kr/1360000/MidFcstInfoService/getMidTa";
+            url += "?ServiceKey=" + "p6DmSuJ8xqCPAMgABBFMeYCk%2BmC%2FmibL769%2FJOalQ0GwVG3DQaGjIglUEgWhh5OEKc%2BLnKVV2XtrnBj3i08CvA%3D%3D";
+            url += "&numOfRows=1000";
+            url += "&pageNo=1";
+            url += "&dataType=XML";
+            url += "&regId=11B10101";
+            url += "&tmFc=" + DateTime.Today.ToString("yyyyMMdd") + "0600";
+
+            request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = "GET";
+
+            results = string.Empty;
+            using (response = request.GetResponse() as HttpWebResponse)
+            {
+                StreamReader reader = new StreamReader(response.GetResponseStream());
+                results = reader.ReadToEnd();
+            }
+
+            xml.LoadXml(results);
+            header = xml.SelectSingleNode("response/header");
+
+            if (header.ChildNodes[0].InnerText == "00")
+            {
+                XmlNode body = xml.SelectSingleNode("response/body/items/item");
+                XmlNodeList node = body.ChildNodes;
+
+                for (int i = 0; i < 16; i++)
+                {
+                    midTemp.Add(node[i * 3 + 1].InnerText);
+                }
+            }
+            else
+            {
+                MessageBox.Show("에러 코드 : " + header.ChildNodes[0].InnerText + '\n' + header.ChildNodes[1].InnerText,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        #region 리스트 반환 함수
+        public static List<List<string>> getWeatherInfo1()
+        {
+            return weatherInfo1;
+        }
+
+        public static List<List<string>> getWeatherInfo2()
+        {
+            return weatherInfo2;
+        }
+
+        public static List<List<string>> getWeatherInfo3()
+        {
+            return weatherInfo3;
+        }
+
+        public static List<string> getMidRain()
+        {
+            return midRain;
+        }
+
+        public static List<string> getMidWeather()
+        {
+            return midWeather;
+        }
+
+        public static List<string> getMidTemp()
+        {
+            return midTemp;
+        }
+        #endregion
     }
 }
