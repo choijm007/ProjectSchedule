@@ -41,6 +41,7 @@
             this.deadlineListBox = new System.Windows.Forms.ListBox();
             this.takingClassesListView = new System.Windows.Forms.ListView();
             this.btOpenWeatherForm = new System.Windows.Forms.Button();
+            this.progressBarLoadAPI = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // klasButton
@@ -77,7 +78,7 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(35, 63);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 578F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 581F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(609, 576);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
@@ -174,11 +175,20 @@
             this.btOpenWeatherForm.UseVisualStyleBackColor = true;
             this.btOpenWeatherForm.Click += new System.EventHandler(this.btOpenWeatherForm_Click);
             // 
+            // progressBarLoadAPI
+            // 
+            this.progressBarLoadAPI.Location = new System.Drawing.Point(385, 13);
+            this.progressBarLoadAPI.Maximum = 3;
+            this.progressBarLoadAPI.Name = "progressBarLoadAPI";
+            this.progressBarLoadAPI.Size = new System.Drawing.Size(259, 23);
+            this.progressBarLoadAPI.TabIndex = 15;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(660, 950);
+            this.Controls.Add(this.progressBarLoadAPI);
             this.Controls.Add(this.btOpenWeatherForm);
             this.Controls.Add(this.takingClassesListView);
             this.Controls.Add(this.deadlineListBox);
@@ -194,6 +204,7 @@
             this.Controls.Add(this.klasButton);
             this.Name = "Form1";
             this.Text = "ProjectSchedule";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
 
@@ -214,6 +225,7 @@
         private System.Windows.Forms.ListBox deadlineListBox;
         private System.Windows.Forms.ListView takingClassesListView;
         private System.Windows.Forms.Button btOpenWeatherForm;
+        private System.Windows.Forms.ProgressBar progressBarLoadAPI;
     }
 }
 

@@ -64,6 +64,7 @@ namespace ProjectSchedule
         #region Weather 변수
         public static bool isWeatherOpen = false; // 날씨 창 하나만 열리게 하기
         string url = string.Empty;
+        Thread getWeatherAPI;
         // 단기예보
         static List<List<string>> weatherInfo1; // 오늘
         static List<List<string>> weatherInfo2; // 내일
@@ -96,8 +97,16 @@ namespace ProjectSchedule
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Thread getWeatherInfo = new Thread(getAPI);
-            getWeatherInfo.Start();
+            getWeatherAPI = new Thread(getAPI);
+            getWeatherAPI.Start();
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (getWeatherAPI.IsAlive)
+            {
+                getWeatherAPI.Abort();
+            }
         }
 
         public void getAPI()
@@ -105,165 +114,191 @@ namespace ProjectSchedule
             getVilageFcst();
             getMidFcst();
 
-            MessageBox.Show("API 수신 성공", "테스트");
             btOpenWeatherForm.Enabled = true;
+            Thread.Sleep(1000);
+            progressBarLoadAPI.Visible = false;
         }
 
         private void getVilageFcst() // 단기예보
         {
-            // 단기예보조회
-            url = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
-            url += "?ServiceKey=" + "p6DmSuJ8xqCPAMgABBFMeYCk%2BmC%2FmibL769%2FJOalQ0GwVG3DQaGjIglUEgWhh5OEKc%2BLnKVV2XtrnBj3i08CvA%3D%3D";
-            url += "&numOfRows=1000";
-            url += "&pageNo=1";
-            url += "&dataType=XML";
-            url += "&base_date=" + DateTime.Today.AddDays(-1).ToString("yyyyMMdd");
-            url += "&base_time=2300";
-            url += "&nx=61"; // 서울특별시 노원구 월계동 좌표
-            url += "&ny=128";
-
-            XmlDocument xml;
-            XmlNode header;
-            do
+            while (true) // 단기예보조회
             {
-                var request = (HttpWebRequest)WebRequest.Create(url);
-                request.Method = "GET";
+                url = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
+                url += "?ServiceKey=" + "p6DmSuJ8xqCPAMgABBFMeYCk%2BmC%2FmibL769%2FJOalQ0GwVG3DQaGjIglUEgWhh5OEKc%2BLnKVV2XtrnBj3i08CvA%3D%3D";
+                url += "&numOfRows=1000";
+                url += "&pageNo=1";
+                url += "&dataType=XML";
+                url += "&base_date=" + DateTime.Today.AddDays(-1).ToString("yyyyMMdd");
+                url += "&base_time=2300";
+                url += "&nx=61"; // 서울특별시 노원구 월계동 좌표
+                url += "&ny=128";
 
-                string results = string.Empty;
-                HttpWebResponse response;
-                using (response = request.GetResponse() as HttpWebResponse)
+                XmlDocument xml;
+                XmlNode header;
+                do
                 {
-                    StreamReader reader = new StreamReader(response.GetResponseStream());
-                    results = reader.ReadToEnd();
+                    var request = (HttpWebRequest)WebRequest.Create(url);
+                    request.Method = "GET";
+
+                    string results = string.Empty;
+                    HttpWebResponse response;
+                    using (response = request.GetResponse() as HttpWebResponse)
+                    {
+                        StreamReader reader = new StreamReader(response.GetResponseStream());
+                        results = reader.ReadToEnd();
+                    }
+
+                    xml = new XmlDocument();
+                    xml.LoadXml(results);
+                    header = xml.SelectSingleNode("response/header");
+                } while (header == null);
+
+                if (header.ChildNodes[0].InnerText == "00")
+                {
+                    XmlNode body = xml.SelectSingleNode("response/body/items");
+
+                    foreach (XmlNode node in body.ChildNodes)
+                    {
+                        if (node["fcstDate"].InnerText == DateTime.Today.ToString("yyyyMMdd"))
+                        { // 오늘 날씨
+                            int time = int.Parse(node["fcstTime"].InnerText.Substring(0, 2));
+                            if (weatherInfo1.Count < time + 1)
+                            {
+                                weatherInfo1.Add(new List<string>());
+                            }
+                            weatherInfo1[time].Add(node["fcstValue"].InnerText);
+                        }
+                        else if (node["fcstDate"].InnerText == DateTime.Today.AddDays(1).ToString("yyyyMMdd"))
+                        { // 내일 날씨
+                            int time = int.Parse(node["fcstTime"].InnerText.Substring(0, 2));
+                            if (weatherInfo2.Count < time + 1)
+                            {
+                                weatherInfo2.Add(new List<string>());
+                            }
+                            weatherInfo2[time].Add(node["fcstValue"].InnerText);
+                        }
+                        else if (node["fcstDate"].InnerText == DateTime.Today.AddDays(2).ToString("yyyyMMdd"))
+                        { // 모레 날씨
+                            int time = int.Parse(node["fcstTime"].InnerText.Substring(0, 2));
+                            if (weatherInfo3.Count < time + 1)
+                            {
+                                weatherInfo3.Add(new List<string>());
+                            }
+                            weatherInfo3[time].Add(node["fcstValue"].InnerText);
+                        }
+                    }
+                    break;
                 }
-
-                xml = new XmlDocument();
-                xml.LoadXml(results);
-                header = xml.SelectSingleNode("response/header");
-            } while (header == null);
-
-            if (header.ChildNodes[0].InnerText == "00")
-            {
-                XmlNode body = xml.SelectSingleNode("response/body/items");
-
-                foreach (XmlNode node in body.ChildNodes)
+                else
                 {
-                    if (node["fcstDate"].InnerText == DateTime.Today.ToString("yyyyMMdd"))
-                    { // 오늘 날씨
-                        int time = int.Parse(node["fcstTime"].InnerText.Substring(0, 2));
-                        if (weatherInfo1.Count < time + 1)
-                        {
-                            weatherInfo1.Add(new List<string>());
-                        }
-                        weatherInfo1[time].Add(node["fcstValue"].InnerText);
-                    }
-                    else if (node["fcstDate"].InnerText == DateTime.Today.AddDays(1).ToString("yyyyMMdd"))
-                    { // 내일 날씨
-                        int time = int.Parse(node["fcstTime"].InnerText.Substring(0, 2));
-                        if (weatherInfo2.Count < time + 1)
-                        {
-                            weatherInfo2.Add(new List<string>());
-                        }
-                        weatherInfo2[time].Add(node["fcstValue"].InnerText);
-                    }
-                    else if (node["fcstDate"].InnerText == DateTime.Today.AddDays(2).ToString("yyyyMMdd"))
-                    { // 모레 날씨
-                        int time = int.Parse(node["fcstTime"].InnerText.Substring(0, 2));
-                        if (weatherInfo3.Count < time + 1)
-                        {
-                            weatherInfo3.Add(new List<string>());
-                        }
-                        weatherInfo3[time].Add(node["fcstValue"].InnerText);
-                    }
+                    MessageBox.Show("에러 코드 : " + header.ChildNodes[0].InnerText + '\n' + header.ChildNodes[1].InnerText,
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            else
-            {
-                MessageBox.Show("에러 코드 : " + header.ChildNodes[0].InnerText + '\n' + header.ChildNodes[1].InnerText,
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            progressBarLoadAPI.Value++;
         }
 
         private void getMidFcst() // 중기예보
         {
-            // 중기육상예보조회
-            url = "http://apis.data.go.kr/1360000/MidFcstInfoService/getMidLandFcst";
-            url += "?ServiceKey=" + "p6DmSuJ8xqCPAMgABBFMeYCk%2BmC%2FmibL769%2FJOalQ0GwVG3DQaGjIglUEgWhh5OEKc%2BLnKVV2XtrnBj3i08CvA%3D%3D";
-            url += "&numOfRows=1000";
-            url += "&pageNo=1";
-            url += "&dataType=XML";
-            url += "&regId=11B00000";
-            url += "&tmFc=" + DateTime.Today.ToString("yyyyMMdd") + "0600";
-
-            var request = (HttpWebRequest)WebRequest.Create(url);
-            request.Method = "GET";
-
-            string results = string.Empty;
-            HttpWebResponse response;
-            using (response = request.GetResponse() as HttpWebResponse)
+            while (true) // 중기육상예보조회
             {
-                StreamReader reader = new StreamReader(response.GetResponseStream());
-                results = reader.ReadToEnd();
-            }
+                url = "http://apis.data.go.kr/1360000/MidFcstInfoService/getMidLandFcst";
+                url += "?ServiceKey=" + "p6DmSuJ8xqCPAMgABBFMeYCk%2BmC%2FmibL769%2FJOalQ0GwVG3DQaGjIglUEgWhh5OEKc%2BLnKVV2XtrnBj3i08CvA%3D%3D";
+                url += "&numOfRows=1000";
+                url += "&pageNo=1";
+                url += "&dataType=XML";
+                url += "&regId=11B00000";
+                url += "&tmFc=" + DateTime.Today.ToString("yyyyMMdd") + "0600";
 
-            XmlDocument xml = new XmlDocument();
-            xml.LoadXml(results);
-            XmlNode header = xml.SelectSingleNode("response/header");
-
-            if (header.ChildNodes[0].InnerText == "00")
-            {
-                XmlNode body = xml.SelectSingleNode("response/body/items/item");
-                XmlNodeList node = body.ChildNodes;
-
-                for (int i = 0; i < 13; i++)
+                XmlDocument xml;
+                XmlNode header;
+                do
                 {
-                    midRain.Add(node[i + 1].InnerText);
-                    midWeather.Add(node[i + 14].InnerText);
+                    var request = (HttpWebRequest)WebRequest.Create(url);
+                    request.Method = "GET";
+
+                    string results = string.Empty;
+                    HttpWebResponse response;
+                    using (response = request.GetResponse() as HttpWebResponse)
+                    {
+                        StreamReader reader = new StreamReader(response.GetResponseStream());
+                        results = reader.ReadToEnd();
+                    }
+
+                    xml = new XmlDocument();
+                    xml.LoadXml(results);
+                    header = xml.SelectSingleNode("response/header");
+                } while (header == null);
+
+                if (header.ChildNodes[0].InnerText == "00")
+                {
+                    XmlNode body = xml.SelectSingleNode("response/body/items/item");
+                    XmlNodeList node = body.ChildNodes;
+
+                    for (int i = 0; i < 13; i++)
+                    {
+                        midRain.Add(node[i + 1].InnerText);
+                        midWeather.Add(node[i + 14].InnerText);
+                    }
+                    break;
+                }
+                else
+                {
+                    MessageBox.Show("에러 코드 : " + header.ChildNodes[0].InnerText + '\n' + header.ChildNodes[1].InnerText,
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            else
+            progressBarLoadAPI.Value++;
+
+            while (true)
             {
-                MessageBox.Show("에러 코드 : " + header.ChildNodes[0].InnerText + '\n' + header.ChildNodes[1].InnerText,
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                // 중기기온조회
+                url = "http://apis.data.go.kr/1360000/MidFcstInfoService/getMidTa";
+                url += "?ServiceKey=" + "p6DmSuJ8xqCPAMgABBFMeYCk%2BmC%2FmibL769%2FJOalQ0GwVG3DQaGjIglUEgWhh5OEKc%2BLnKVV2XtrnBj3i08CvA%3D%3D";
+                url += "&numOfRows=1000";
+                url += "&pageNo=1";
+                url += "&dataType=XML";
+                url += "&regId=11B10101";
+                url += "&tmFc=" + DateTime.Today.ToString("yyyyMMdd") + "0600";
 
-            // 중기기온조회
-            url = "http://apis.data.go.kr/1360000/MidFcstInfoService/getMidTa";
-            url += "?ServiceKey=" + "p6DmSuJ8xqCPAMgABBFMeYCk%2BmC%2FmibL769%2FJOalQ0GwVG3DQaGjIglUEgWhh5OEKc%2BLnKVV2XtrnBj3i08CvA%3D%3D";
-            url += "&numOfRows=1000";
-            url += "&pageNo=1";
-            url += "&dataType=XML";
-            url += "&regId=11B10101";
-            url += "&tmFc=" + DateTime.Today.ToString("yyyyMMdd") + "0600";
-
-            request = (HttpWebRequest)WebRequest.Create(url);
-            request.Method = "GET";
-
-            results = string.Empty;
-            using (response = request.GetResponse() as HttpWebResponse)
-            {
-                StreamReader reader = new StreamReader(response.GetResponseStream());
-                results = reader.ReadToEnd();
-            }
-
-            xml.LoadXml(results);
-            header = xml.SelectSingleNode("response/header");
-
-            if (header.ChildNodes[0].InnerText == "00")
-            {
-                XmlNode body = xml.SelectSingleNode("response/body/items/item");
-                XmlNodeList node = body.ChildNodes;
-
-                for (int i = 0; i < 16; i++)
+                XmlDocument xml;
+                XmlNode header;
+                do
                 {
-                    midTemp.Add(node[i * 3 + 1].InnerText);
+                    var request = (HttpWebRequest)WebRequest.Create(url);
+                    request.Method = "GET";
+
+                    string results = string.Empty;
+                    HttpWebResponse response;
+                    using (response = request.GetResponse() as HttpWebResponse)
+                    {
+                        StreamReader reader = new StreamReader(response.GetResponseStream());
+                        results = reader.ReadToEnd();
+                    }
+
+                    xml = new XmlDocument();
+                    xml.LoadXml(results);
+                    header = xml.SelectSingleNode("response/header");
+                } while (header == null);
+
+                if (header.ChildNodes[0].InnerText == "00")
+                {
+                    XmlNode body = xml.SelectSingleNode("response/body/items/item");
+                    XmlNodeList node = body.ChildNodes;
+
+                    for (int i = 0; i < 16; i++)
+                    {
+                        midTemp.Add(node[i * 3 + 1].InnerText);
+                    }
+                    break;
+                }
+                else
+                {
+                    MessageBox.Show("에러 코드 : " + header.ChildNodes[0].InnerText + '\n' + header.ChildNodes[1].InnerText,
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            else
-            {
-                MessageBox.Show("에러 코드 : " + header.ChildNodes[0].InnerText + '\n' + header.ChildNodes[1].InnerText,
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            progressBarLoadAPI.Value++;
         }
 
         #region 리스트 반환 함수
