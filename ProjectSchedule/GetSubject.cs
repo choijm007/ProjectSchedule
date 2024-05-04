@@ -40,6 +40,10 @@ namespace ProjectSchedule
             }
         }
 
+        public List<string> getSubjectName() { return subjectName; }
+        public List<string> getSubjectTime() { return subjectName; }
+
+        public List<string[]> getCommitDay() { return CommitDay; }
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
@@ -58,7 +62,7 @@ namespace ProjectSchedule
 
 
                 return tli;
-            }catch (Exception ex)
+            }catch
             {
                 throw new Exception();
             }
