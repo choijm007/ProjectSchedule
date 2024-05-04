@@ -207,8 +207,15 @@ namespace ProjectSchedule
                 url += "&numOfRows=1000";
                 url += "&pageNo=1";
                 url += "&dataType=XML";
-                url += "&regId=11B00000";
-                url += "&tmFc=" + DateTime.Today.ToString("yyyyMMdd") + "0600";
+                url += "&regId=11B00000"; // 서울, 인천, 경기도
+                if (DateTime.Today.Hour < 6)
+                {
+                    url += "&tmFc=" + DateTime.Today.AddDays(-1).ToString("yyyyMMdd") + "1800";
+                }
+                else
+                {
+                    url += "&tmFc=" + DateTime.Today.ToString("yyyyMMdd") + "0600";
+                }
 
                 XmlDocument xml;
                 XmlNode header;
@@ -258,8 +265,15 @@ namespace ProjectSchedule
                 url += "&numOfRows=1000";
                 url += "&pageNo=1";
                 url += "&dataType=XML";
-                url += "&regId=11B10101";
-                url += "&tmFc=" + DateTime.Today.ToString("yyyyMMdd") + "0600";
+                url += "&regId=11B10101"; // 서울
+                if(DateTime.Today.Hour < 6)
+                {
+                    url += "&tmFc=" + DateTime.Today.AddDays(-1).ToString("yyyyMMdd") + "1800";
+                }
+                else
+                {
+                    url += "&tmFc=" + DateTime.Today.ToString("yyyyMMdd") + "0600";
+                }
 
                 XmlDocument xml;
                 XmlNode header;
