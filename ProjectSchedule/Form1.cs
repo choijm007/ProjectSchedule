@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlTypes;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -65,6 +66,7 @@ namespace ProjectSchedule
         public static bool isWeatherOpen = false; // 날씨 창 하나만 열리게 하기
         string url = string.Empty;
         Thread getWeatherAPI;
+        static DateTime weatherDate;
         // 단기예보
         static List<List<string>> weatherInfo1; // 오늘
         static List<List<string>> weatherInfo2; // 내일
@@ -111,12 +113,19 @@ namespace ProjectSchedule
 
         public void getAPI()
         {
+            weatherDate = DateTime.Now;
             getVilageFcst();
             getMidFcst();
 
-            btOpenWeatherForm.Enabled = true;
-            Thread.Sleep(1000);
-            progressBarLoadAPI.Visible = false;
+            btOpenWeatherForm.Invoke(new MethodInvoker(delegate
+            {
+                btOpenWeatherForm.Enabled = true;
+            }));
+            Thread.Sleep(100);
+            progressBarLoadAPI.Invoke(new MethodInvoker(delegate
+            {
+                progressBarLoadAPI.Visible = false;
+            }));
         }
 
         private void getVilageFcst() // 단기예보
@@ -128,7 +137,7 @@ namespace ProjectSchedule
                 url += "&numOfRows=1000";
                 url += "&pageNo=1";
                 url += "&dataType=XML";
-                url += "&base_date=" + DateTime.Today.AddDays(-1).ToString("yyyyMMdd");
+                url += "&base_date=" + weatherDate.AddDays(-1).ToString("yyyyMMdd");
                 url += "&base_time=2300";
                 url += "&nx=61"; // 서울특별시 노원구 월계동 좌표
                 url += "&ny=128";
@@ -159,7 +168,7 @@ namespace ProjectSchedule
 
                     foreach (XmlNode node in body.ChildNodes)
                     {
-                        if (node["fcstDate"].InnerText == DateTime.Today.ToString("yyyyMMdd"))
+                        if (node["fcstDate"].InnerText == weatherDate.ToString("yyyyMMdd"))
                         { // 오늘 날씨
                             int time = int.Parse(node["fcstTime"].InnerText.Substring(0, 2));
                             if (weatherInfo1.Count < time + 1)
@@ -168,7 +177,7 @@ namespace ProjectSchedule
                             }
                             weatherInfo1[time].Add(node["fcstValue"].InnerText);
                         }
-                        else if (node["fcstDate"].InnerText == DateTime.Today.AddDays(1).ToString("yyyyMMdd"))
+                        else if (node["fcstDate"].InnerText == weatherDate.AddDays(1).ToString("yyyyMMdd"))
                         { // 내일 날씨
                             int time = int.Parse(node["fcstTime"].InnerText.Substring(0, 2));
                             if (weatherInfo2.Count < time + 1)
@@ -177,7 +186,7 @@ namespace ProjectSchedule
                             }
                             weatherInfo2[time].Add(node["fcstValue"].InnerText);
                         }
-                        else if (node["fcstDate"].InnerText == DateTime.Today.AddDays(2).ToString("yyyyMMdd"))
+                        else if (node["fcstDate"].InnerText == weatherDate.AddDays(2).ToString("yyyyMMdd"))
                         { // 모레 날씨
                             int time = int.Parse(node["fcstTime"].InnerText.Substring(0, 2));
                             if (weatherInfo3.Count < time + 1)
@@ -195,7 +204,10 @@ namespace ProjectSchedule
                         "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            progressBarLoadAPI.Value++;
+            progressBarLoadAPI.Invoke(new MethodInvoker(delegate
+            {
+                progressBarLoadAPI.Value++;
+            }));
         }
 
         private void getMidFcst() // 중기예보
@@ -208,13 +220,13 @@ namespace ProjectSchedule
                 url += "&pageNo=1";
                 url += "&dataType=XML";
                 url += "&regId=11B00000"; // 서울, 인천, 경기도
-                if (DateTime.Today.Hour < 6)
+                if (weatherDate.Hour < 6)
                 {
-                    url += "&tmFc=" + DateTime.Today.AddDays(-1).ToString("yyyyMMdd") + "1800";
+                    url += "&tmFc=" + weatherDate.AddDays(-1).ToString("yyyyMMdd") + "0600";
                 }
                 else
                 {
-                    url += "&tmFc=" + DateTime.Today.ToString("yyyyMMdd") + "0600";
+                    url += "&tmFc=" + weatherDate.ToString("yyyyMMdd") + "0600";
                 }
 
                 XmlDocument xml;
@@ -255,7 +267,10 @@ namespace ProjectSchedule
                         "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            progressBarLoadAPI.Value++;
+            progressBarLoadAPI.Invoke(new MethodInvoker(delegate
+            {
+                progressBarLoadAPI.Value++;
+            }));
 
             while (true)
             {
@@ -266,13 +281,13 @@ namespace ProjectSchedule
                 url += "&pageNo=1";
                 url += "&dataType=XML";
                 url += "&regId=11B10101"; // 서울
-                if(DateTime.Today.Hour < 6)
+                if (weatherDate.Hour < 6)
                 {
-                    url += "&tmFc=" + DateTime.Today.AddDays(-1).ToString("yyyyMMdd") + "1800";
+                    url += "&tmFc=" + weatherDate.AddDays(-1).ToString("yyyyMMdd") + "0600";
                 }
                 else
                 {
-                    url += "&tmFc=" + DateTime.Today.ToString("yyyyMMdd") + "0600";
+                    url += "&tmFc=" + weatherDate.ToString("yyyyMMdd") + "0600";
                 }
 
                 XmlDocument xml;
@@ -312,10 +327,18 @@ namespace ProjectSchedule
                         "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            progressBarLoadAPI.Value++;
+            progressBarLoadAPI.Invoke(new MethodInvoker(delegate
+            {
+                progressBarLoadAPI.Value++;
+            }));
         }
 
-        #region 리스트 반환 함수
+        #region 변수 반환 함수
+        public static DateTime getWeatherDate()
+        {
+            return weatherDate;
+        }
+
         public static List<List<string>> getWeatherInfo1()
         {
             return weatherInfo1;

@@ -1,6 +1,6 @@
 ﻿namespace ProjectSchedule.Weather
 {
-    partial class WeatherPanel
+    partial class TodayPanel
     {
         /// <summary> 
         /// 필수 디자이너 변수입니다.
@@ -198,7 +198,7 @@
             this.lbTime.Text = "시간";
             this.lbTime.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // WeatherPanel
+            // TodayPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -218,7 +218,7 @@
             this.Controls.Add(this.pbWeather);
             this.Controls.Add(this.lbTime);
             this.Font = new System.Drawing.Font("굴림", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.Name = "WeatherPanel";
+            this.Name = "TodayPanel";
             this.Size = new System.Drawing.Size(1110, 600);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

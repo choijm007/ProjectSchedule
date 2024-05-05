@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace ProjectSchedule.Weather
 {
-    public partial class WeatherPanel : UserControl
+    public partial class TodayPanel : UserControl
     {
         public List<Label> timeList;
         public List<PictureBox> weatherList;
@@ -18,7 +18,7 @@ namespace ProjectSchedule.Weather
         public List<Label> rainList;
         public List<Label> windList;
 
-        public WeatherPanel()
+        public TodayPanel()
         {
             InitializeComponent();
             InitList();
@@ -79,6 +79,8 @@ namespace ProjectSchedule.Weather
                 newRain.Size = new Size(40, 20);
                 newRain.AutoSize = false;
                 newRain.Location = new Point(i * 40 + 70, 112);
+                newRain.MouseMove += control_MouseMove;
+                newRain.Tag = "";
                 rainList.Add(newRain);
                 this.Controls.Add(newRain);
 

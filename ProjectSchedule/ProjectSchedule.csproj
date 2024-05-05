@@ -100,11 +100,17 @@
     <Compile Include="Weather\WeatherForm.Designer.cs">
       <DependentUpon>WeatherForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Weather\WeatherPanel.cs">
+    <Compile Include="Weather\TodayPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Weather\WeatherPanel.Designer.cs">
-      <DependentUpon>WeatherPanel.cs</DependentUpon>
+    <Compile Include="Weather\TodayPanel.Designer.cs">
+      <DependentUpon>TodayPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Weather\WeekPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Weather\WeekPanel.Designer.cs">
+      <DependentUpon>WeekPanel.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="AddEditForm.resx">
       <DependentUpon>AddEditForm.cs</DependentUpon>
@@ -137,8 +143,11 @@
     <EmbeddedResource Include="Weather\WeatherForm.resx">
       <DependentUpon>WeatherForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Weather\WeatherPanel.resx">
-      <DependentUpon>WeatherPanel.cs</DependentUpon>
+    <EmbeddedResource Include="Weather\TodayPanel.resx">
+      <DependentUpon>TodayPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Weather\WeekPanel.resx">
+      <DependentUpon>WeekPanel.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
