@@ -33,8 +33,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,6 +47,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddEditForm.cs">
@@ -88,7 +92,24 @@
     <Compile Include="RepeatListForm.Designer.cs">
       <DependentUpon>RepeatListForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ScheduleClass.cs" />
+    <Compile Include="Weather\WeatherForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Weather\WeatherForm.Designer.cs">
+      <DependentUpon>WeatherForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Weather\TodayPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Weather\TodayPanel.Designer.cs">
+      <DependentUpon>TodayPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Weather\WeekPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Weather\WeekPanel.Designer.cs">
+      <DependentUpon>WeekPanel.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AddEditForm.resx">
       <DependentUpon>AddEditForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -112,9 +133,19 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="RepeatListForm.resx">
       <DependentUpon>RepeatListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Weather\WeatherForm.resx">
+      <DependentUpon>WeatherForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Weather\TodayPanel.resx">
+      <DependentUpon>TodayPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Weather\WeekPanel.resx">
+      <DependentUpon>WeekPanel.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -128,6 +159,39 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\구름많고 눈.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\구름많고 비.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\구름많고 비눈.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\구름많음%28밤%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\구름많음.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\맑음%28밤%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\맑음.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\흐리고 눈.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\흐리고 비.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\흐리고 비눈.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\흐림.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
