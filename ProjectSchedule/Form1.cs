@@ -10,6 +10,11 @@ using System.Windows.Forms;
 
 namespace ProjectSchedule
 {
+    public class ScheduleList
+    {
+        public static List<Schedule> list = new List<Schedule>();
+    }
+
     public partial class Form1 : Form
     {
         public Form1()
@@ -33,16 +38,13 @@ namespace ProjectSchedule
 
                 this.Controls.Add(newLabel); // 폼에 레이블 추가
             }
-
-
-            
         }
+
 
         private void addEditButton_Click(object sender, EventArgs e)
         {
             AddEditForm aeForm = new AddEditForm();
             DialogResult dResult = aeForm.ShowDialog();
-
         }
 
         private void klasButton_Click(object sender, EventArgs e)
