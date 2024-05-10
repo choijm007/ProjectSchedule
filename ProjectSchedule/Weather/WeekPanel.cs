@@ -69,7 +69,7 @@ namespace ProjectSchedule.Weather
                 newWeatherAM.Location = new Point(i * 100 + 110, 40);
                 newWeatherAM.Size = new Size(40, 40);
                 newWeatherAM.SizeMode = PictureBoxSizeMode.Zoom;
-                newWeatherAM.Image = Properties.Resources.맑음;
+                //newWeatherAM.Image = Properties.Resources.맑음;
                 newWeatherAM.MouseMove += control_MouseMove;
                 newWeatherAM.Tag = "";
                 weatherAMList.Add(newWeatherAM);
@@ -80,7 +80,7 @@ namespace ProjectSchedule.Weather
                 newWeatherPM.Location = new Point(i * 100 + 150, 40);
                 newWeatherPM.Size = new Size(40, 40);
                 newWeatherPM.SizeMode = PictureBoxSizeMode.Zoom;
-                newWeatherPM.Image = Properties.Resources.맑음;
+                //newWeatherPM.Image = Properties.Resources.맑음;
                 newWeatherPM.MouseMove += control_MouseMove;
                 newWeatherPM.Tag = "";
                 weatherPMList.Add(newWeatherPM);

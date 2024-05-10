@@ -159,47 +159,40 @@ namespace ProjectSchedule.Weather
             }
 
             mRain[0] = int.Parse(weatherInfo2[0][7]);
-            for (int i = 0; i < 12; i++)
-            {
-                mRain[0] = Math.Max(mRain[0], int.Parse(weatherInfo2[i][7]));
-            }
             mRain[1] = int.Parse(weatherInfo2[12][7]);
-            for (int i = 0; i < 12; i++)
-            {
-                mRain[1] = Math.Max(mRain[1], int.Parse(weatherInfo2[i + 12][7]));
-            }
             mRain[2] = int.Parse(weatherInfo3[0][7]);
-            for (int i = 0; i < 12; i++)
-            {
-                mRain[2] = Math.Max(mRain[2], int.Parse(weatherInfo3[i][7]));
-            }
             mRain[3] = int.Parse(weatherInfo3[12][7]);
             for (int i = 0; i < 12; i++)
             {
+                mRain[0] = Math.Max(mRain[0], int.Parse(weatherInfo2[i][7]));
+                mRain[1] = Math.Max(mRain[1], int.Parse(weatherInfo2[i + 12][7]));
+                mRain[2] = Math.Max(mRain[2], int.Parse(weatherInfo3[i][7]));
                 mRain[3] = Math.Max(mRain[3], int.Parse(weatherInfo3[i + 12][7]));
-            }
+            }            
             #endregion
 
-            for (int i = 0; i < 2; i++) // 내일, 모레 날씨
+            panelWeatherWeek.Invoke(new MethodInvoker(delegate
             {
-                panelWeatherWeek.Invoke(new MethodInvoker(delegate
+                for (int i = 0; i < 2; i++) // 내일, 모레 날씨
                 {
                     panelWeatherWeek.tempMaxList[i].Text = mTemp[i * 2].ToString() + "°";
                     panelWeatherWeek.tempMinList[i].Text = mTemp[i * 2 + 1].ToString() + "°";
 
                     panelWeatherWeek.rainAMList[i].Text = mRain[i * 2].ToString() + "%";
                     panelWeatherWeek.rainPMList[i].Text = mRain[i * 2 + 1].ToString() + "%";
+                }
 
-                    panelWeatherWeek.weatherAMList[i] = selectTodayWeatherImg(panelWeatherWeek.weatherAMList[i],
-                        12, int.Parse(weatherInfo2[i][5]), int.Parse(weatherInfo2[i][6]));
-                    panelWeatherWeek.weatherPMList[i] = selectTodayWeatherImg(panelWeatherWeek.weatherPMList[i],
-                        18, int.Parse(weatherInfo3[i][5]), int.Parse(weatherInfo3[i][6]));
-                }));    
-            }
-            
-            for (int i = 0; i < 5; i++) // 3일뒤 ~ 7일뒤 날씨
-            {
-                panelWeatherWeek.Invoke(new MethodInvoker(delegate
+                panelWeatherWeek.weatherAMList[0] = selectTodayWeatherImg(panelWeatherWeek.weatherAMList[0],
+                    8, int.Parse(weatherInfo2[8][5]), int.Parse(weatherInfo2[8][6]));
+                panelWeatherWeek.weatherPMList[0] = selectTodayWeatherImg(panelWeatherWeek.weatherPMList[0],
+                    18, int.Parse(weatherInfo2[18][5]), int.Parse(weatherInfo2[18][6]));
+
+                panelWeatherWeek.weatherAMList[1] = selectTodayWeatherImg(panelWeatherWeek.weatherAMList[1],
+                    8, int.Parse(weatherInfo3[8][5]), int.Parse(weatherInfo3[8][6]));
+                panelWeatherWeek.weatherPMList[1] = selectTodayWeatherImg(panelWeatherWeek.weatherPMList[1],
+                    18, int.Parse(weatherInfo3[18][5]), int.Parse(weatherInfo3[18][6]));
+
+                for (int i = 0; i < 5; i++) // 3일뒤 ~ 7일뒤 날씨
                 {
                     panelWeatherWeek.tempMaxList[i + 2].Text = midTemp[i * 2 + 1] + "°";
                     panelWeatherWeek.tempMinList[i + 2].Text = midTemp[i * 2] + "°";
@@ -211,8 +204,8 @@ namespace ProjectSchedule.Weather
                     panelWeatherWeek.weatherPMList[i + 2].Image = selectWeekWeatherImg(midWeather[i * 2 + 1]);
                     panelWeatherWeek.weatherAMList[i + 2].Tag = midWeather[i * 2];
                     panelWeatherWeek.weatherPMList[i + 2].Tag = midWeather[i * 2 + 1];
-                }));
-            }
+                }
+            }));
         }
 
         private PictureBox selectTodayWeatherImg(PictureBox origin, int time, int sky, int rain)
