@@ -146,7 +146,7 @@
             // lbTemp
             // 
             this.lbTemp.Font = new System.Drawing.Font("굴림", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lbTemp.Location = new System.Drawing.Point(0, 85);
+            this.lbTemp.Location = new System.Drawing.Point(1, 85);
             this.lbTemp.Name = "lbTemp";
             this.lbTemp.Size = new System.Drawing.Size(100, 20);
             this.lbTemp.TabIndex = 39;
