@@ -119,13 +119,29 @@ namespace ProjectSchedule
         {
             AddForm aForm = new AddForm();
             DialogResult dResult = aForm.ShowDialog();
+            if (dResult == DialogResult.OK)
+            {
+                listingSchedulesByDate(monthCalendar1.SelectionStart.Date);
+            }
         }
 
         private void editButton_Click(object sender, EventArgs e)
         {
-            // 수정하고자 하는 일정이 수업일 경우 AddClassForm 을 열도록 수정할 예정
-            AddForm aForm = new AddForm();
-            DialogResult dResult = aForm.ShowDialog();
+            ForDisplay item = listBox1.SelectedItem as ForDisplay;
+            if (item.type == "수업")
+            {
+                ClassAddForm cForm = new ClassAddForm();
+                DialogResult dResult = cForm.ShowDialog();
+            }
+            else
+            {
+                AddForm aForm = new AddForm(ScheduleList.getScheduleIndexById(item.id));
+                DialogResult dResult = aForm.ShowDialog();
+                if (dResult == DialogResult.OK)
+                {
+                    listingSchedulesByDate(monthCalendar1.SelectionStart.Date);
+                }
+            }
         }
 
         private void addClassButton_Click(object sender, EventArgs e)
@@ -160,7 +176,7 @@ namespace ProjectSchedule
                 endTime = string.Empty;
                 userMemo = alarm.userMemo;
                 startTimeForSorting = alarm.startHour * 100 + alarm.startMinute;
-                displayText = $"{startTime} 에 {name} 일정이 있습니다.";
+                displayText = $"{startTime} 에 {name} 이(가) 있습니다.";
             }
 
             public ForDisplay(Appointment appointment)
@@ -168,7 +184,7 @@ namespace ProjectSchedule
                 id = appointment.id;
                 subId = -1;
                 type = "일회성 일정";
-                name = appointment.name + "일정";
+                name = appointment.name;
                 startDay = appointment.startDay.ToString("yyyy-MM-dd");
                 endDay = string.Empty;
                 startTime = appointment.startHour.ToString() + ":" + appointment.startMinute.ToString();
@@ -183,7 +199,7 @@ namespace ProjectSchedule
                 id = repeatSchedule.id;
                 subId = repeatTime.id;
                 type = "반복성 일정";
-                name = repeatSchedule.name + "일정";
+                name = repeatSchedule.name;
                 startDay = repeatSchedule.startDay.ToString("yyyy-MM-dd");
                 endDay = repeatSchedule.endDay.ToString("yyyy-MM-dd");
                 startTime = repeatTime.startHour.ToString() + ":" + repeatTime.startMinute.ToString();
@@ -198,7 +214,7 @@ namespace ProjectSchedule
                 id = classSchedule.id;
                 subId = repeatTime.id;
                 type = "수업";
-                name = classSchedule.name + "수업";
+                name = classSchedule.name;
                 startDay = classSchedule.startDay.ToString("yyyy-MM-dd");
                 endDay = classSchedule.endDay.ToString("yyyy-MM-dd");
                 startTime = repeatTime.startHour.ToString() + ":" + repeatTime.startMinute.ToString();

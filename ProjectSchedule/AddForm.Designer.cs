@@ -156,6 +156,7 @@
             this.applyButton.TabIndex = 11;
             this.applyButton.Text = "적용";
             this.applyButton.UseVisualStyleBackColor = true;
+            this.applyButton.Click += new System.EventHandler(this.applyButton_Click);
             // 
             // cancelButton
             // 
@@ -165,6 +166,7 @@
             this.cancelButton.TabIndex = 12;
             this.cancelButton.Text = "취소";
             this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
             // scheduleCategory
             // 
@@ -548,6 +550,7 @@
             this.repeatAddButton.TabIndex = 38;
             this.repeatAddButton.Text = "추가";
             this.repeatAddButton.UseVisualStyleBackColor = true;
+            this.repeatAddButton.Click += new System.EventHandler(this.repeatAddButton_Click);
             // 
             // repeatViewButton
             // 
