@@ -32,13 +32,10 @@ namespace ProjectSchedule
             showDisplay(RepeatTimes);
         }
 
-        public RepeatListForm(List<ToDo> toDo, int type)
+        public RepeatListForm(List<ToDo> toDo)
         {
             InitializeComponent();
             ToDoList = toDo;
-            if (type == 0) { this.type = "매주"; }
-            else if (type == 1) { this.type = "매달"; }
-            else if (type == 2) { this.type = "매년"; }
 
             showDisplay(ToDoList);
         }
@@ -98,7 +95,14 @@ namespace ProjectSchedule
         }
         private void showDisplay(List<ToDo> list)
         {
+            listBox1.Items.Clear();
 
+            foreach (ToDo temp in list)
+            {
+                listBox1.Items.Add($"({temp.type}) {temp.name} : " +
+                    $"{temp.deadLine.Year}-{temp.deadLine.Month}-{temp.deadLine.Day} " +
+                    $"{temp.deadLineHour}:{temp.deadLineMinute}까지");
+            }
         }
     }
 }

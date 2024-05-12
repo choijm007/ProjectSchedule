@@ -130,8 +130,12 @@ namespace ProjectSchedule
             ForDisplay item = listBox1.SelectedItem as ForDisplay;
             if (item.type == "수업")
             {
-                ClassAddForm cForm = new ClassAddForm();
+                ClassAddForm cForm = new ClassAddForm(ScheduleList.getScheduleIndexById(item.id));
                 DialogResult dResult = cForm.ShowDialog();
+                if (dResult == DialogResult.OK)
+                {
+                    listingSchedulesByDate(monthCalendar1.SelectionStart.Date);
+                }
             }
             else
             {

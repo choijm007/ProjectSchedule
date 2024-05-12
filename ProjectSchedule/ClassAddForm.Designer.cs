@@ -117,6 +117,7 @@
             this.repeatAddButton.TabIndex = 58;
             this.repeatAddButton.Text = "추가";
             this.repeatAddButton.UseVisualStyleBackColor = true;
+            this.repeatAddButton.Click += new System.EventHandler(this.repeatAddButton_Click);
             // 
             // label14
             // 
@@ -521,6 +522,7 @@
             this.todoAddButton.TabIndex = 76;
             this.todoAddButton.Text = "추가";
             this.todoAddButton.UseVisualStyleBackColor = true;
+            this.todoAddButton.Click += new System.EventHandler(this.todoAddButton_Click);
             // 
             // todoViewButton
             // 
@@ -540,6 +542,7 @@
             this.applyButton.TabIndex = 78;
             this.applyButton.Text = "적용";
             this.applyButton.UseVisualStyleBackColor = true;
+            this.applyButton.Click += new System.EventHandler(this.applyButton_Click);
             // 
             // cancelButton
             // 
@@ -549,6 +552,7 @@
             this.cancelButton.TabIndex = 79;
             this.cancelButton.Text = "취소";
             this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
             // errorLabel
             // 

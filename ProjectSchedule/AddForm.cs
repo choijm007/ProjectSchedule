@@ -103,6 +103,8 @@ namespace ProjectSchedule
                 repeatEnableChange(true);
                 repeatAddButton.Enabled = false;
             }
+
+            applyButton.Enabled = true;
         }
 
         private void applyButton_Click(object sender, EventArgs e)

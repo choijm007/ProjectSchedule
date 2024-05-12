@@ -101,7 +101,7 @@ namespace ProjectSchedule
         public List<RepeatTime> repeatList = new List<RepeatTime>();
         public List<ToDo> todoList = new List<ToDo>();
 
-        public ClassSchedule() : base() { }
+        public ClassSchedule(int type) : base() { repeatType = type; }
 
         public List<RepeatTime> getRepeatTimeByDay(DateTime date)
         {

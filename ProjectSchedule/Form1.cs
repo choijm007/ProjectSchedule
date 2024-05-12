@@ -20,37 +20,6 @@ using System.Xml;
 
 namespace ProjectSchedule
 {
-    public class ScheduleList
-    {
-        public static List<Schedule> list = new List<Schedule>();
-
-        public static int getScheduleIndexById(int id)
-        {
-            for (int i = 0; i < list.Count; i++)
-            {
-                if (list[i].id == id) { return i; }
-            }
-            return -1;
-        }
-
-        public static int createNewId()
-        {
-            List<int> idList = new List<int>();
-            int temp = 1;
-
-            for (int i = 0; i < list.Count; i++)
-            {
-                idList.Add(list[i].id);
-            }
-
-            while (true)
-            {
-                if (!idList.Contains(temp)) { return temp; }
-                temp++;
-            }
-        }
-    }
-
     public partial class Form1 : Form
     {
         public Form1()
@@ -399,5 +368,36 @@ namespace ProjectSchedule
             return midTemp;
         }
         #endregion
+    }
+
+    public class ScheduleList
+    {
+        public static List<Schedule> list = new List<Schedule>();
+
+        public static int getScheduleIndexById(int id)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].id == id) { return i; }
+            }
+            return -1;
+        }
+
+        public static int createNewId()
+        {
+            List<int> idList = new List<int>();
+            int temp = 1;
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                idList.Add(list[i].id);
+            }
+
+            while (true)
+            {
+                if (!idList.Contains(temp)) { return temp; }
+                temp++;
+            }
+        }
     }
 }
