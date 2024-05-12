@@ -52,6 +52,57 @@ namespace ProjectSchedule
             }
         }
 
+        private void deleteButton_Click(object sender, EventArgs e)
+        {
+            ForDisplay item = listBox1.SelectedItem as ForDisplay;
+
+            if (item.subId == -1)
+            {
+                ScheduleList.list.RemoveAt(ScheduleList.getScheduleIndexById(item.id));
+            }
+            else if (item.type == "반복성 일정")
+            {
+                RepeatSchedule temp = ScheduleList.list[ScheduleList.getScheduleIndexById(item.id)] as RepeatSchedule;
+
+                for (int i = 0; i < temp.repeatList.Count; i++)
+                {
+                    if (temp.repeatList[i].id == item.subId)
+                    {
+                        temp.repeatList.RemoveAt(i);
+                        break;
+                    }
+                }
+            }
+            else if ((item.type == "수업") && (item.endDay == string.Empty)) // todo
+            {
+                ClassSchedule temp = ScheduleList.list[ScheduleList.getScheduleIndexById(item.id)] as ClassSchedule;
+
+                for (int i = 0; i < temp.todoList.Count; i++)
+                {
+                    if (temp.todoList[i].id == item.subId)
+                    {
+                        temp.todoList.RemoveAt(i);
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                ClassSchedule temp = ScheduleList.list[ScheduleList.getScheduleIndexById(item.id)] as ClassSchedule;
+
+                for (int i = 0; i < temp.repeatList.Count; i++)
+                {
+                    if (temp.repeatList[i].id == item.subId)
+                    {
+                        temp.repeatList.RemoveAt(i);
+                        break;
+                    }
+                }
+            }
+
+            listingSchedulesByDate(monthCalendar1.SelectionStart.Date);
+        }
+
         private void listingSchedulesByDate(DateTime date)
         {
             listBox1.DataSource = null;

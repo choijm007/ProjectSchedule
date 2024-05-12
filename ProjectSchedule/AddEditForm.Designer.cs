@@ -77,6 +77,7 @@
             this.deleteButton.TabIndex = 5;
             this.deleteButton.Text = "삭제";
             this.deleteButton.UseVisualStyleBackColor = true;
+            this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
             // 
             // categoryLabel
             // 
