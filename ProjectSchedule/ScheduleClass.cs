@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace ProjectSchedule
 {
@@ -206,5 +207,146 @@ namespace ProjectSchedule
 
         public ToDo(int id, string type)
         { this.id = id; this.type = type; }
+    }
+
+    public class ForDisplay
+    {
+        public readonly int id;
+        public readonly int subId;
+        public readonly int startTimeForSorting;
+        public string type;
+        public string name;
+        public string startDay;
+        public string endDay;
+        public string startTime;
+        public string endTime;
+        public string userMemo;
+        public string displayText;
+
+        public List<int> getStartTimeToInt()
+        {
+            string[] timeParts = startTime.Split(':');
+
+            return new List<int> { int.Parse(timeParts[0]), int.Parse(timeParts[1]) };
+        }
+
+        public List<int> getEndTimeToInt()
+        {
+            if (endTime == string.Empty) return null;
+
+            string[] timeParts = endTime.Split(':');
+
+            return new List<int> { int.Parse(timeParts[0]), int.Parse(timeParts[1]) };
+        }
+
+        public ForDisplay(Alarm alarm)
+        {
+            id = alarm.id;
+            subId = -1;
+            type = "알람";
+            name = alarm.name;
+            startDay = alarm.startDay.ToString("yyyy-MM-dd");
+            endDay = string.Empty;
+            startTime = alarm.startHour.ToString() + ":" + alarm.startMinute.ToString();
+            endTime = string.Empty;
+            userMemo = alarm.userMemo;
+            startTimeForSorting = alarm.startHour * 100 + alarm.startMinute;
+            displayText = $"{startTime} 에 {name} 이(가) 있습니다.";
+        }
+
+        public ForDisplay(Appointment appointment)
+        {
+            id = appointment.id;
+            subId = -1;
+            type = "일회성 일정";
+            name = appointment.name;
+            startDay = appointment.startDay.ToString("yyyy-MM-dd");
+            endDay = string.Empty;
+            startTime = appointment.startHour.ToString() + ":" + appointment.startMinute.ToString();
+            endTime = appointment.endHour.ToString() + ":" + appointment.endMinute.ToString();
+            userMemo = appointment.userMemo;
+            startTimeForSorting = appointment.startHour * 100 + appointment.startMinute;
+            displayText = $"{startTime} 부터 {endTime} 까지 {name} 일정이 있습니다.";
+        }
+
+        public ForDisplay(RepeatTime repeatTime, RepeatSchedule repeatSchedule)
+        {
+            id = repeatSchedule.id;
+            subId = repeatTime.id;
+            type = "반복성 일정";
+            name = repeatSchedule.name;
+            startDay = repeatSchedule.startDay.ToString("yyyy-MM-dd");
+            endDay = repeatSchedule.endDay.ToString("yyyy-MM-dd");
+            startTime = repeatTime.startHour.ToString() + ":" + repeatTime.startMinute.ToString();
+            endTime = repeatTime.endHour.ToString() + ":" + repeatTime.endMinute.ToString();
+            userMemo = repeatSchedule.userMemo;
+            startTimeForSorting = repeatTime.startHour * 100 + repeatTime.startMinute;
+            displayText = $"{startTime} 부터 {endTime} 까지 {name} 일정이 있습니다.";
+        }
+
+        public ForDisplay(RepeatTime repeatTime, ClassSchedule classSchedule)
+        {
+            id = classSchedule.id;
+            subId = repeatTime.id;
+            type = "수업";
+            name = classSchedule.name;
+            startDay = classSchedule.startDay.ToString("yyyy-MM-dd");
+            endDay = classSchedule.endDay.ToString("yyyy-MM-dd");
+            startTime = repeatTime.startHour.ToString() + ":" + repeatTime.startMinute.ToString();
+            endTime = repeatTime.endHour.ToString() + ":" + repeatTime.endMinute.ToString();
+            userMemo = classSchedule.userMemo;
+            startTimeForSorting = repeatTime.startHour * 100 + repeatTime.startMinute;
+            displayText = $"{startTime} 부터 {endTime} 까지 {name} 수업이 있습니다.";
+        }
+
+        public ForDisplay(RepeatTime repeatTime, RepeatSchedule repeatSchedule, DateTime sDay)
+        {
+            id = repeatSchedule.id;
+            subId = repeatTime.id;
+            type = "반복성 일정";
+            name = repeatSchedule.name;
+            startDay = sDay.ToString("yyyy-MM-dd");
+            endDay = repeatSchedule.endDay.ToString("yyyy-MM-dd");
+            startTime = repeatTime.startHour.ToString() + ":" + repeatTime.startMinute.ToString();
+            endTime = repeatTime.endHour.ToString() + ":" + repeatTime.endMinute.ToString();
+            userMemo = repeatSchedule.userMemo;
+            startTimeForSorting = repeatTime.startHour * 100 + repeatTime.startMinute;
+            displayText = $"{startTime} 부터 {endTime} 까지 {name} 일정이 있습니다.";
+        }
+
+        public ForDisplay(RepeatTime repeatTime, ClassSchedule classSchedule, DateTime sDay)
+        {
+            id = classSchedule.id;
+            subId = repeatTime.id;
+            type = "수업";
+            name = classSchedule.name;
+            startDay = sDay.ToString("yyyy-MM-dd");
+            endDay = classSchedule.endDay.ToString("yyyy-MM-dd");
+            startTime = repeatTime.startHour.ToString() + ":" + repeatTime.startMinute.ToString();
+            endTime = repeatTime.endHour.ToString() + ":" + repeatTime.endMinute.ToString();
+            userMemo = classSchedule.userMemo;
+            startTimeForSorting = repeatTime.startHour * 100 + repeatTime.startMinute;
+            displayText = $"{startTime} 부터 {endTime} 까지 {name} 수업이 있습니다.";
+        }
+
+        public ForDisplay(ToDo todo, ClassSchedule classSchedule)
+        {
+            id = classSchedule.id;
+            subId = todo.id;
+            type = "수업";
+            name = $"{classSchedule.name} 수업의 {todo.name} 과제";
+            startDay = todo.deadLine.ToString("yyyy-MM-dd");
+            endDay = string.Empty;
+            startTime = todo.deadLineHour.ToString() + ":" + todo.deadLineMinute.ToString();
+            endTime = string.Empty;
+            userMemo = todo.userMemo;
+            startTimeForSorting = todo.deadLineHour * 100 + todo.deadLineMinute;
+            displayText = $"{startTime} 에 {name} {todo.type} 이(가) 마감됩니다.";
+        }
+
+        public override string ToString()
+        {
+            return displayText;
+        }
     }
 }

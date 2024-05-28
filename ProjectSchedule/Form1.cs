@@ -48,10 +48,103 @@ namespace ProjectSchedule
             
         }
 
+        private void update()
+        {
+            // update() 함수에서 추가한 schedule 레이블만 삭제
+            for (int i = this.Controls.Count - 1; i >= 0; i--)
+            {
+                if (this.Controls[i] is Label && this.Controls[i].Name.StartsWith("scheduleLabel_"))
+                {
+                    this.Controls.RemoveAt(i);
+                }
+            }
+
+            // 현재 날짜 기준 월요일과 일요일의 날짜 정보 얻기
+            DateTime today = DateTime.Today;
+            int diff = (7 + (today.DayOfWeek - DayOfWeek.Monday)) % 7;
+            DateTime startOfWeek = today.AddDays(-1 * diff);
+            DateTime endOfWeek = startOfWeek.AddDays(6);
+
+
+            // 이번 주에 있는 일정들 탐색
+            List<ForDisplay> schedulesThisWeek = new List<ForDisplay>();
+            for (int i = 0; i < ScheduleList.list.Count; i++)
+            {
+                if (ScheduleList.list[i] is Alarm )
+                {
+                    Alarm temp = ScheduleList.list[i] as Alarm;
+                    if ((DateTime.Compare(temp.startDay.Date, startOfWeek.Date) != -1) && (DateTime.Compare(temp.startDay.Date, endOfWeek.Date) != 1))
+                    {
+                        schedulesThisWeek.Add(new ForDisplay(temp));
+                    }
+                }
+                else if (ScheduleList.list[i] is Appointment)
+                {
+                    Appointment temp = ScheduleList.list[i] as Appointment;
+                    if ((DateTime.Compare(temp.startDay.Date, startOfWeek.Date) != -1) && (DateTime.Compare(temp.startDay.Date, endOfWeek.Date) != 1))
+                    {
+                        schedulesThisWeek.Add(new ForDisplay(temp));
+                    }
+                }
+                else if (ScheduleList.list[i] is RepeatSchedule)
+                {
+                    RepeatSchedule temp = ScheduleList.list[i] as RepeatSchedule;
+                    for (DateTime date = startOfWeek; date <= endOfWeek; date = date.AddDays(1))
+                    {
+                        if ((DateTime.Compare(date, temp.startDay) == -1) || (DateTime.Compare(date, temp.endDay) == 1)) { continue; }
+
+                        foreach (RepeatTime rt in temp.getRepeatTimeByDay(date)) { schedulesThisWeek.Add(new ForDisplay(rt, temp, date)); }
+                    }
+                }
+                else // 수업
+                {
+                    ClassSchedule temp = ScheduleList.list[i] as ClassSchedule;
+                    for (DateTime date = startOfWeek; date <= endOfWeek; date = date.AddDays(1))
+                    {
+                        if ((DateTime.Compare(date, temp.startDay) == -1) || (DateTime.Compare(date, temp.endDay) == 1)) { continue; }
+
+                        foreach (RepeatTime rt in temp.getRepeatTimeByDay(date)) { schedulesThisWeek.Add(new ForDisplay(rt, temp, date)); }
+                        foreach (ToDo td in temp.getTodoByDay(date)) { schedulesThisWeek.Add(new ForDisplay(td, temp)); }
+                    }
+                }
+            }
+
+            // 요일별로 일정을 화면에 추가
+            foreach (ForDisplay fd in schedulesThisWeek)
+            {
+                addLabel(fd);
+            }
+        }
+
+        private void addLabel(ForDisplay fd)
+        {
+            Label scheduleLabel = new Label();
+            scheduleLabel.Text = fd.displayText;
+            scheduleLabel.Location = new Point(dayToPosition(DateTime.Parse(fd.startDay).DayOfWeek), timeToPosition(fd.getStartTimeToInt())); // 레이블의 위치 설정
+
+            if (fd.getEndTimeToInt() == null)
+            {
+                scheduleLabel.Size = new Size(87, 100);
+            }
+            else
+            {
+                scheduleLabel.Size = new Size(87, timeToPosition(fd.getEndTimeToInt()) - timeToPosition(fd.getStartTimeToInt())); // 레이블의 크기 설정
+            }
+
+            scheduleLabel.BackColor = Color.White;
+
+            // schedule 표시하는 레이블 구분용
+            scheduleLabel.Name = "scheduleLabel_" + fd.GetHashCode();
+
+            this.Controls.Add(scheduleLabel); // 폼에 레이블 추가
+            this.Controls.SetChildIndex(scheduleLabel, 0);
+        }
+
         private void addEditButton_Click(object sender, EventArgs e)
         {
             AddEditForm aeForm = new AddEditForm();
             DialogResult dResult = aeForm.ShowDialog();
+            update();
         }
 
         private void klasButton_Click(object sender, EventArgs e)

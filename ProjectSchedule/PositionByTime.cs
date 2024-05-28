@@ -14,6 +14,12 @@ namespace ProjectSchedule
             return (63 + temp);
         }
 
+        public int timeToPosition(List<int> lst)
+        {
+            int temp = (lst[0] * 24) + ((lst[1] / 10) * 4);
+            return (63 + temp);
+        }
+
         public int dayToPosition(string day)
         {
             int temp;
@@ -46,6 +52,40 @@ namespace ProjectSchedule
                     break;
                 case "일":
                 case "일요일":
+                    temp = 6;
+                    break;
+                default:
+                    return -1;
+            }
+
+            return (35 + 87 * temp);
+        }
+
+        public int dayToPosition(DayOfWeek day)
+        {
+            int temp;
+
+            switch (day)
+            {
+                case DayOfWeek.Monday:
+                    temp = 0;
+                    break;
+                case DayOfWeek.Tuesday:
+                    temp = 1;
+                    break;
+                case DayOfWeek.Wednesday:
+                    temp = 2;
+                    break;
+                case DayOfWeek.Thursday:
+                    temp = 3;
+                    break;
+                case DayOfWeek.Friday:
+                    temp = 4;
+                    break;
+                case DayOfWeek.Saturday:
+                    temp = 5;
+                    break;
+                case DayOfWeek.Sunday:
                     temp = 6;
                     break;
                 default:
