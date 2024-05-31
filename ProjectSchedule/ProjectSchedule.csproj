@@ -94,6 +94,7 @@
     <Compile Include="RepeatListForm.Designer.cs">
       <DependentUpon>RepeatListForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ScheduleClass.cs" />
     <Compile Include="Weather\WeatherForm.cs">
       <SubType>Form</SubType>
     </Compile>
