@@ -82,13 +82,14 @@
             // 
             // webBrowser1
             // 
-            this.webBrowser1.Location = new System.Drawing.Point(1049, 12);
+            this.webBrowser1.Location = new System.Drawing.Point(646, 359);
             this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser1.Name = "webBrowser1";
             this.webBrowser1.ScriptErrorsSuppressed = true;
-            this.webBrowser1.Size = new System.Drawing.Size(64, 77);
+            this.webBrowser1.Size = new System.Drawing.Size(454, 239);
             this.webBrowser1.TabIndex = 4;
             this.webBrowser1.Visible = false;
+            this.webBrowser1.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.webBrowser1_DocumentCompleted);
             // 
             // btnLogin
             // 
@@ -174,6 +175,7 @@
             this.btnGive.TabIndex = 13;
             this.btnGive.Text = "적용하기";
             this.btnGive.UseVisualStyleBackColor = true;
+            this.btnGive.Click += new System.EventHandler(this.btnGive_Click);
             // 
             // progressBar1
             // 

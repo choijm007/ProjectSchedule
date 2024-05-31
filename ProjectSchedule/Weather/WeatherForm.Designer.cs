@@ -43,6 +43,7 @@
             this.lbToday.Size = new System.Drawing.Size(106, 21);
             this.lbToday.TabIndex = 2;
             this.lbToday.Text = "오늘 날씨";
+            this.lbToday.Click += new System.EventHandler(this.lbToday_Click);
             // 
             // lbWeek
             // 

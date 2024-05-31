@@ -14,12 +14,14 @@ namespace ProjectSchedule
 {
     public partial class GetSubject : Form
     {
+
+
         List<string> subjectName = new List<string>();
         List<string> subjectTime = new List<string>();
         List<string> fileNm = new List<string>();
         List<string[]> CommitDay = new List<string[]>();
         int n = -1;
-
+        bool loadComplete = false;
         public GetSubject()
         {
             InitializeComponent();
@@ -41,12 +43,26 @@ namespace ProjectSchedule
         }
 
         public List<string> getSubjectName() { return subjectName; }
-        public List<string> getSubjectTime() { return subjectName; }
+        public List<string> getSubjectTime() { return subjectTime; }
 
         public List<string[]> getCommitDay() { return CommitDay; }
+
+        public delegate void SendListParents(List<string> l1, List<string> l2, List<string[]> l3);
+        public event SendListParents Changed;
+        private void btnGive_Click(object sender, EventArgs e)
+        {
+            if (Changed != null)
+                Changed(subjectName, subjectTime, CommitDay);
+        }
+
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            loadComplete = true;
         }
 
         private  HtmlElementCollection getSubjectElement() 
@@ -130,8 +146,15 @@ namespace ProjectSchedule
             {
                 try
                 {
-                    webBrowser1.Navigate("https://klas.kw.ac.kr");
+                    //webBrowser1.Navigate("https://klas.kw.ac.kr");
+/*                  loadComplete = false;
+                    while (true)
+                    {
+                        if (loadComplete)
+                            break;
+                    }*/
                     await Task.Delay(1500);
+
                     tli = getSubjectElement();
                 }
                 catch
@@ -141,9 +164,29 @@ namespace ProjectSchedule
                 break;
 
             }
+            
+/*
+            Task<HtmlElementCollection> t1 = Task<HtmlElementCollection>.Run(() =>
+            {
+                webBrowser1.Navigate("https://klas.kw.ac.kr");
+                loadComplete = false;
+                while (true)
+                {
+                    if (loadComplete)
+                        break;
+                }
 
+                HtmlDocument doc = webBrowser1.Document;
+                string tableid = "appModule";
+                HtmlElement name = doc.GetElementById(tableid);
+                HtmlElementCollection tul = name.GetElementsByTagName("ul");
+                HtmlElementCollection t = tul[0].GetElementsByTagName("li");
 
+                return t;
 
+            });
+
+             tli = t1.Result;*/
 
             foreach (HtmlElement el in tli)
             {
@@ -226,22 +269,38 @@ namespace ProjectSchedule
 
 
             HtmlElementCollection ttd = ttr[1].GetElementsByTagName("td");
+            if (ttd.Count < 2)
+            {
+                progressBar1.Value = progressBar1.Maximum;
+                return;
+            }
             ttd[1].InvokeMember("click");
             HtmlElementCollection elm;
             fileNm = new List<string>();
             // download = new Dictionary<string, HtmlElement>();
             do
             {
+                HtmlElement sub;
                 progressBar1.Value += 1;
                 await Task.Delay(1500);
                 HtmlDocument subjectDoc = webBrowser1.Document;
-                HtmlElement sub = subjectDoc.GetElementById(tableid);
+                sub = subjectDoc.GetElementById(tableid);
                 HtmlElementCollection ta = sub.GetElementsByTagName("a");
-                fileNm.Add(ta[0].InnerText);
+                try
+                {
+                    fileNm.Add(ta[0].InnerText);
+                }
+                catch
+                {
+                    
+                }
+
                 // download.Add(ta[0].InnerText,ta[0]);
                 //filePath.Add(ta[0].InnerText,webBrowser1.Url +"/"+ ta[0].InnerText);
+
                 elm = sub.GetElementsByTagName("dd");
                 elm[0].InvokeMember("click");
+
 
             } while (elm[0].InnerText != "이전글이 없습니다.");
 
@@ -372,5 +431,7 @@ namespace ProjectSchedule
                 txtCommitDate.Text += "\r\n\r\n";
             }
         }
+
+
     }
 }
