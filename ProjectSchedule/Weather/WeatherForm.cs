@@ -20,13 +20,14 @@ namespace ProjectSchedule.Weather
     public partial class WeatherForm : Form
     {
         #region 변수
-        int alterRain = 50;
+        const int alterRain = 50;
 
         readonly string[] windDir = { "↓", "↙", "↙", "↙", "←", "↖", "↖", "↖", "↑",
             "↗", "↗", "↗", "→", "↘", "↘", "↘", "↓" };
         readonly string[] windDirStr = { "북", "북북동", "북동", "동북동", "동", "동남동", "남동", "남남동", "남",
             "남남서", "남서", "서남서", "서", "서북서", "북서", "북북서", "북" };
         readonly string[] dayofweek = { "일", "월", "화", "수", "목", "금", "토" };
+        readonly string[] PMGrade = { "", "좋음", "보통", "나쁨", "매우나쁨" };
 
         DateTime weatherDate;
         // 단기예보
@@ -37,6 +38,8 @@ namespace ProjectSchedule.Weather
         List<string> midRain;
         List<string> midWeather;
         List<string> midTemp;
+        // 미세먼지
+        List<string> PMInfo;
         #endregion
 
         public WeatherForm()
@@ -59,6 +62,7 @@ namespace ProjectSchedule.Weather
             midRain = Form1.getMidRain();
             midWeather = Form1.getMidWeather();
             midTemp = Form1.getMidTemp();
+            PMInfo = Form1.getPMInfo();
         }
 
         private void WeatherForm_Load(object sender, EventArgs e)
@@ -81,6 +85,7 @@ namespace ProjectSchedule.Weather
 
             setVilageFcst();
             setMidFcst();
+            setPMFcst();
 
             this.Invoke(new MethodInvoker(delegate
             {
@@ -205,6 +210,36 @@ namespace ProjectSchedule.Weather
                     panelWeatherWeek.weatherAMList[i + 2].Tag = midWeather[i * 2];
                     panelWeatherWeek.weatherPMList[i + 2].Tag = midWeather[i * 2 + 1];
                 }
+            }));
+        }
+
+        private void setPMFcst() // 미세먼지
+        {
+            int curHour = DateTime.Now.Hour;
+
+            panelWeatherCur.Invoke(new MethodInvoker(delegate
+            {
+                panelWeatherCur.weatherList[0] = selectTodayWeatherImg(panelWeatherCur.weatherList[0],
+                curHour, int.Parse(weatherInfo1[curHour][5]), int.Parse(weatherInfo1[curHour][6]));
+                panelWeatherCur.labelList[0].Text = weatherInfo1[curHour][0] + "°C";
+                panelWeatherCur.labelList[1].Text = panelWeatherCur.weatherList[0].Tag.ToString();
+                if (PMInfo[1] == "점검및교정")
+                {
+                    panelWeatherCur.labelList[2].Text = "미세먼지 정보를 불러올 수 없습니다.";
+                }
+                else
+                {
+                    panelWeatherCur.labelList[2].Text += PMInfo[2] + " (" + PMGrade[int.Parse(PMInfo[3])] + ")";
+                }
+                if (PMInfo[4] == "점검및교정")
+                {
+                    panelWeatherCur.labelList[3].Text = "초미세먼지 정보를 불러올 수 없습니다.";
+                }
+                else
+                {
+                    panelWeatherCur.labelList[3].Text += PMInfo[5] + " (" + PMGrade[int.Parse(PMInfo[6])] + ")";
+                }
+                panelWeatherCur.labelList[4].Text = "(" + PMInfo[0] + " 기준)";
             }));
         }
 

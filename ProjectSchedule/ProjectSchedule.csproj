@@ -95,6 +95,12 @@
       <DependentUpon>RepeatListForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ScheduleClass.cs" />
+    <Compile Include="Weather\CurPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Weather\CurPanel.Designer.cs">
+      <DependentUpon>CurPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Weather\WeatherForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -140,6 +146,9 @@
     </Compile>
     <EmbeddedResource Include="RepeatListForm.resx">
       <DependentUpon>RepeatListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Weather\CurPanel.resx">
+      <DependentUpon>CurPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Weather\WeatherForm.resx">
       <DependentUpon>WeatherForm.cs</DependentUpon>
