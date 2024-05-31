@@ -23,6 +23,10 @@ namespace ProjectSchedule
 {
     public partial class Form1 : Form
     {
+        List<string> subjectName = new List<string>();
+        List<string> subjectTime = new List<string>();
+        List<string[]> CommitDay = new List<string[]>();
+
         public Form1()
         {
             InitializeComponent();
@@ -168,11 +172,28 @@ namespace ProjectSchedule
             DialogResult dResult = aeForm.ShowDialog();
             update();
         }
+        private void klas_changed(List<string> l1, List<string> l2, List<string[]> l3)
+        {
+            subjectName = l1;
+            subjectTime = l2;
+            CommitDay = l3;
+
+/*            foreach (string s in l1)
+                Console.WriteLine(s);
+
+            foreach (string s in l2)
+                Console.WriteLine(s);
+
+            foreach (string[] s in l3)
+                Console.WriteLine(string.Join(" ",s));*/
+        }
 
         private void klasButton_Click(object sender, EventArgs e)
         {
             GetSubject subject = new GetSubject();
 
+
+            subject.Changed += new GetSubject.SendListParents(klas_changed);
             subject.ShowDialog();
         }
 

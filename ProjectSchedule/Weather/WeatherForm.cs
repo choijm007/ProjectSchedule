@@ -373,5 +373,10 @@ namespace ProjectSchedule.Weather
             Debug.Assert(result != null, "selectMidWeatherImg - 이미지 오류");
             return result;
         }
+
+        private void lbToday_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
