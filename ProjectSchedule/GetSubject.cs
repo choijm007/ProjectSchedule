@@ -20,7 +20,7 @@ namespace ProjectSchedule
         List<string> subjectTime = new List<string>();
         List<string> fileNm = new List<string>();
         List<string[]> CommitDay = new List<string[]>();
-        int n = -1;
+        int n = 0;
         bool loadComplete = false;
         public GetSubject()
         {
@@ -347,8 +347,11 @@ namespace ProjectSchedule
             await Task.Delay(2000);
             HtmlElementCollection tle = getSubjectElement();
             int k = tle.Count;*/
+
             progressBar1.Maximum = n;
             progressBar1.Value = 0;
+
+
             for (int i = 0; i < n; i++)
             {
                 try
@@ -359,6 +362,7 @@ namespace ProjectSchedule
                     {
                         try
                         {
+                            await Task.Delay(1500);
                             webBrowser1.Navigate("https://klas.kw.ac.kr");
                             await Task.Delay(1500);
                             tli = getSubjectElement();
