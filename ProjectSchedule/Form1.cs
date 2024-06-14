@@ -203,7 +203,7 @@ namespace ProjectSchedule
         string[] errStr = new string[4];
 
         const int API_COUNT = 4;
-        const int alterRain = 30;
+        public static int alterRain = 50;
         string url = string.Empty;
         Thread getWeatherAPI;
         static DateTime weatherDate;
@@ -293,9 +293,10 @@ namespace ProjectSchedule
                 rainAlert();
                 
                 Thread.Sleep(100);
-                progressBarLoadAPI.Invoke(new MethodInvoker(delegate
+                this.Invoke(new MethodInvoker(delegate
                 {
                     progressBarLoadAPI.Visible = false;
+                    btAlertSetting.Visible = true;
                 }));
             }
             catch (Exception ex)
@@ -573,14 +574,19 @@ namespace ProjectSchedule
         {
             for (int i = 0; i < 24; i++) // 강우 경고 라벨 visible 설정
             {
-                if (int.Parse(weatherInfo1[i][7]) >= alterRain)
+                this.Invoke(new MethodInvoker(delegate
                 {
-                    labelList[i].Invoke(new MethodInvoker(delegate
+                    if (int.Parse(weatherInfo1[i][7]) >= alterRain)
                     {
                         labelList[i].Visible = true;
                         labelList[i].Tag = weatherInfo1[i][9];
-                    }));
-                }
+                    }
+                    else
+                    {
+                        labelList[i].Visible = false;
+                        labelList[i].Tag = "";
+                    }
+                }));
             }
         }
 
@@ -588,6 +594,16 @@ namespace ProjectSchedule
         {
             Control control = sender as Control;
             tooltip.SetToolTip(control, control.Tag.ToString());
+        }
+
+        private void btAlertSetting_Click(object sender, EventArgs e)
+        {
+            Weather.WeatherSetting weatherSetting = new Weather.WeatherSetting();
+            DialogResult weatherSettingResult = weatherSetting.ShowDialog();
+            if (weatherSettingResult == DialogResult.OK)
+            {
+                rainAlert();
+            }
         }
 
         #region 변수 반환 함수 

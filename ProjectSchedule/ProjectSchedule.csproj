@@ -113,6 +113,12 @@
     <Compile Include="Weather\TodayPanel.Designer.cs">
       <DependentUpon>TodayPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Weather\WeatherSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Weather\WeatherSetting.Designer.cs">
+      <DependentUpon>WeatherSetting.cs</DependentUpon>
+    </Compile>
     <Compile Include="Weather\WeekPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -155,6 +161,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Weather\TodayPanel.resx">
       <DependentUpon>TodayPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Weather\WeatherSetting.resx">
+      <DependentUpon>WeatherSetting.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Weather\WeekPanel.resx">
       <DependentUpon>WeekPanel.cs</DependentUpon>
@@ -204,6 +213,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\흐림.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\settings.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

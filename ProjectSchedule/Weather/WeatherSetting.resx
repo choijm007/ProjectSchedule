@@ -117,41 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="흐리고_비눈" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\흐리고 비눈.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="맑음" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\맑음.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="맑음_밤_" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\맑음(밤).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="구름많고_눈" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\구름많고 눈.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="구름많음_밤_" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\구름많음(밤).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="흐리고_눈" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\흐리고 눈.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="구름많고_비" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\구름많고 비.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="흐리고_비" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\흐리고 비.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="흐림" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\흐림.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="구름많음" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\구름많음.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="구름많고_비눈" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\구름많고 비눈.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="settings" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\settings.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
 </root>

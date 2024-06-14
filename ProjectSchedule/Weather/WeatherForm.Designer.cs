@@ -102,6 +102,9 @@
             this.Controls.Add(this.lbWeek);
             this.Controls.Add(this.lbToday);
             this.Controls.Add(this.panelWeatherToday);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(1068, 605);
+            this.MinimumSize = new System.Drawing.Size(1068, 605);
             this.Name = "WeatherForm";
             this.Text = "Weather";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.WeatherForm_FormClosed);

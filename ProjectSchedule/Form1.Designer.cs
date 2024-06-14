@@ -44,6 +44,7 @@
             this.progressBarLoadAPI = new System.Windows.Forms.ProgressBar();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tooltip = new System.Windows.Forms.ToolTip(this.components);
+            this.btAlertSetting = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // klasButton
@@ -208,11 +209,23 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(609, 576);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
+            // btAlertSetting
+            // 
+            this.btAlertSetting.Image = global::ProjectSchedule.Properties.Resources.settings;
+            this.btAlertSetting.Location = new System.Drawing.Point(621, 13);
+            this.btAlertSetting.Name = "btAlertSetting";
+            this.btAlertSetting.Size = new System.Drawing.Size(24, 24);
+            this.btAlertSetting.TabIndex = 16;
+            this.btAlertSetting.UseVisualStyleBackColor = true;
+            this.btAlertSetting.Visible = false;
+            this.btAlertSetting.Click += new System.EventHandler(this.btAlertSetting_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(660, 950);
+            this.Controls.Add(this.btAlertSetting);
             this.Controls.Add(this.progressBarLoadAPI);
             this.Controls.Add(this.btOpenWeatherForm);
             this.Controls.Add(this.takingClassesListView);
@@ -252,6 +265,7 @@
         private System.Windows.Forms.ProgressBar progressBarLoadAPI;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.ToolTip tooltip;
+        private System.Windows.Forms.Button btAlertSetting;
     }
 }
 
