@@ -434,6 +434,8 @@ namespace ProjectSchedule
                 txtCommitDate.Text += String.Join(" ", s);
                 txtCommitDate.Text += "\r\n\r\n";
             }
+            if (CommitDay.Count == 0)
+                MessageBox.Show("남아 있는 과제가 없습니다.");
         }
 
 
