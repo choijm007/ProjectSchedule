@@ -14,7 +14,7 @@ namespace ProjectSchedule
 {
     public partial class GetSubject : Form
     {
-
+        int no_star = 1;
 
         List<string> subjectName = new List<string>();
         List<string> subjectTime = new List<string>();
@@ -249,7 +249,17 @@ namespace ProjectSchedule
 
 
             checkedListBox1.Items.Clear();
-            HtmlElementCollection tt = tli[num - 1].GetElementsByTagName("button");
+
+            HtmlElementCollection tt;
+            try
+            {
+                tt = tli[num - 1].GetElementsByTagName("button");
+            }
+            catch
+            {
+                MessageBox.Show("Try again");
+                return;
+            }
             // 여기서 강의자료실로 이동
             // 그 후 선택된거 다운로드
 
@@ -274,6 +284,24 @@ namespace ProjectSchedule
                 progressBar1.Value = progressBar1.Maximum;
                 return;
             }
+
+            #region 별표 자료 추가
+            HtmlElementCollection ttd2 = null;
+            string star_img_src = "/assets/custom/images/icon-star.png";
+
+            if (ttd[0].InnerHtml.Contains(star_img_src))
+            {
+                while (no_star < ttr.Count && ttr[no_star].GetElementsByTagName("td")[0].InnerHtml.Contains(star_img_src))
+                    no_star++;
+                progressBar1.Maximum = int.Parse(ttr[no_star].GetElementsByTagName("td")[0].GetElementsByTagName("span")[0].InnerHtml);
+                ttd2 = ttr[no_star].GetElementsByTagName("td");
+            }
+            else
+            {
+                progressBar1.Maximum = int.Parse(ttd[0].GetElementsByTagName("span")[0].InnerHtml);
+            }
+            #endregion
+
             ttd[1].InvokeMember("click");
             HtmlElementCollection elm;
             fileNm = new List<string>();
@@ -304,6 +332,51 @@ namespace ProjectSchedule
 
             } while (elm[0].InnerText != "이전글이 없습니다.");
 
+            #region 별표 자료 추가
+            HtmlElement list_button = webBrowser1.Document.GetElementById(tableid).GetElementsByTagName("button")[1];
+            list_button.InvokeMember("click");
+            await Task.Delay(3000);
+
+            name = doc.GetElementById(tableid);
+            ttr = name.GetElementsByTagName("tr");
+            ttd = ttr[no_star].GetElementsByTagName("td");
+
+            if (no_star > 1 && ttd2 != null)
+            {
+                ttd[1].InvokeMember("click");
+                // download = new Dictionary<string, HtmlElement>();
+                do
+                {
+                    HtmlElement sub;
+                    progressBar1.Value += 1;
+                    await Task.Delay(1500);
+                    HtmlDocument subjectDoc = webBrowser1.Document;
+                    sub = subjectDoc.GetElementById(tableid);
+                    HtmlElementCollection ta = sub.GetElementsByTagName("a");
+                    try
+                    {
+                        fileNm.Add(ta[0].InnerText);
+                    }
+                    catch
+                    {
+
+                    }
+
+                    // download.Add(ta[0].InnerText,ta[0]);
+                    //filePath.Add(ta[0].InnerText,webBrowser1.Url +"/"+ ta[0].InnerText);
+
+                    elm = sub.GetElementsByTagName("dd");
+                    elm[0].InvokeMember("click");
+
+
+                } while (elm[0].InnerText != "이전글이 없습니다.");
+
+                list_button = webBrowser1.Document.GetElementById(tableid).GetElementsByTagName("button")[1];
+                list_button.InvokeMember("click");
+                await Task.Delay(3000);
+            }
+            #endregion
+
             progressBar1.Value = progressBar1.Maximum;
             for (int i = 0; i < fileNm.Count; i++)
             {
@@ -313,6 +386,15 @@ namespace ProjectSchedule
 
         private async void btnDownload_Click(object sender, EventArgs e)
         {
+            #region 별표 자료 추가
+            HtmlDocument doc = webBrowser1.Document;
+            HtmlElement name = doc.GetElementById("appModule");
+            HtmlElementCollection ttr = name.GetElementsByTagName("tr");
+            HtmlElementCollection ttd = ttr[1].GetElementsByTagName("td");
+            ttd[1].InvokeMember("click");
+            #endregion
+            // 밑에 elm[1] > elm[0], 다음글 > 이전글 수정, try~catch 문 추가
+
             HtmlElementCollection elm;
             string tableid = "appModule";
             do
@@ -322,18 +404,61 @@ namespace ProjectSchedule
                 HtmlElement sub = subjectDoc.GetElementById(tableid);
                 HtmlElementCollection ta = sub.GetElementsByTagName("a");
 
-                if (search(ta[0].InnerText))
+                try
                 {
-                    ta[0].InvokeMember("click");
-                    await Task.Delay(1500);
+                    if (search(ta[0].InnerText))
+                    {
+                        ta[0].InvokeMember("click");
+                        await Task.Delay(1500);
+                    }
                 }
-
+                catch { }
 
 
                 elm = sub.GetElementsByTagName("dd");
-                elm[1].InvokeMember("click");
+                elm[0].InvokeMember("click");
 
-            } while (elm[1].InnerText != "다음글이 없습니다.");
+            } while (elm[0].InnerText != "이전글이 없습니다.");
+
+            #region 별표 자료 추가
+            HtmlElement list_button = webBrowser1.Document.GetElementById(tableid).GetElementsByTagName("button")[1];
+            list_button.InvokeMember("click");
+            await Task.Delay(3000);
+
+            if (no_star > 1)
+            {
+                name = doc.GetElementById(tableid);
+                ttr = name.GetElementsByTagName("tr");
+                ttd = ttr[no_star].GetElementsByTagName("td");
+                ttd[1].InvokeMember("click");
+
+                do
+                {
+                    await Task.Delay(1500);
+                    HtmlDocument subjectDoc = webBrowser1.Document;
+                    HtmlElement sub = subjectDoc.GetElementById(tableid);
+                    HtmlElementCollection ta = sub.GetElementsByTagName("a");
+
+                    try
+                    {
+                        if (search(ta[0].InnerText))
+                        {
+                            ta[0].InvokeMember("click");
+                            await Task.Delay(1500);
+                        }
+                    }
+                    catch { }
+
+                    elm = sub.GetElementsByTagName("dd");
+                    elm[0].InvokeMember("click");
+
+                } while (elm[0].InnerText != "이전글이 없습니다.");
+
+                list_button = webBrowser1.Document.GetElementById(tableid).GetElementsByTagName("button")[1];
+                list_button.InvokeMember("click");
+                await Task.Delay(3000);
+            }
+            #endregion
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -358,12 +483,14 @@ namespace ProjectSchedule
                 {
                     progressBar1.Value += 1;
                     HtmlElementCollection tli;
+
+                    webBrowser1.Navigate("https://klas.kw.ac.kr");
+                    await Task.Delay(1500);
+
                     while (true)
                     {
                         try
                         {
-                            await Task.Delay(1500);
-                            webBrowser1.Navigate("https://klas.kw.ac.kr");
                             await Task.Delay(1500);
                             tli = getSubjectElement();
                         }

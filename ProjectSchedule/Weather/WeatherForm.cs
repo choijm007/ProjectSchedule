@@ -20,8 +20,6 @@ namespace ProjectSchedule.Weather
     public partial class WeatherForm : Form
     {
         #region 변수
-        const int alterRain = 50;
-
         readonly string[] windDir = { "↓", "↙", "↙", "↙", "←", "↖", "↖", "↖", "↑",
             "↗", "↗", "↗", "→", "↘", "↘", "↘", "↓" };
         readonly string[] windDirStr = { "북", "북북동", "북동", "동북동", "동", "동남동", "남동", "남남동", "남",
@@ -106,7 +104,7 @@ namespace ProjectSchedule.Weather
                 {
                     panelWeatherToday.tempList[i].Text = weatherInfo1[i][0];
                     panelWeatherToday.rainList[i].Text = weatherInfo1[i][7];
-                    if (int.Parse(weatherInfo1[i][7]) >= alterRain) // 강수 확률 일정값 이상이면 빨간 글씨
+                    if (int.Parse(weatherInfo1[i][7]) >= Form1.alterRain) // 강수 확률 일정값 이상이면 빨간 글씨
                     {
                         panelWeatherToday.rainList[i].ForeColor = Color.Red;
                     }
