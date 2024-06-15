@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,8 @@ namespace ProjectSchedule
         List<string> fileNm = new List<string>();
         List<string[]> CommitDay = new List<string[]>();
         int n = 0;
+
+        
         bool loadComplete = false;
         public GetSubject()
         {
@@ -29,6 +32,8 @@ namespace ProjectSchedule
 
         private void GetSubject_Load(object sender, EventArgs e)
         {
+            webBrowser1.Navigate("https://klas.kw.ac.kr");
+
             listView1.View = View.Details;
 
             listView1.Columns.Add("No.");
@@ -53,6 +58,9 @@ namespace ProjectSchedule
         {
             if (Changed != null)
                 Changed(subjectName, subjectTime, CommitDay);
+
+            MessageBox.Show("적용 완료!");
+            this.Close();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -141,6 +149,8 @@ namespace ProjectSchedule
                 MessageBox.Show("Try Again");
                 return;
             }
+            
+
             HtmlElementCollection tli;
             while (true)
             {
@@ -204,7 +214,27 @@ namespace ProjectSchedule
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
+
+            HtmlDocument doc = webBrowser1.Document;
+
+            if (doc.Title == "광운대학교")
+            {
+                HtmlElementCollection tul = doc.GetElementsByTagName("a");
+                foreach(HtmlElement el in tul)
+                {
+                    if(el.InnerText == "Logout")
+                    {
+                        el.InvokeMember("click");
+                        
+                    }
+                }
+            }
+            
+            
             autoLogin();
+            
+           
+            
         }
 
         private async void btnGetFile_Click(object sender, EventArgs e)
@@ -357,13 +387,15 @@ namespace ProjectSchedule
                 try
                 {
                     progressBar1.Value += 1;
+                    await Task.Delay(1500);
+                    webBrowser1.Navigate("https://klas.kw.ac.kr");
+
                     HtmlElementCollection tli;
                     while (true)
                     {
                         try
                         {
-                            await Task.Delay(1500);
-                            webBrowser1.Navigate("https://klas.kw.ac.kr");
+                            
                             await Task.Delay(1500);
                             tli = getSubjectElement();
                         }
@@ -374,6 +406,8 @@ namespace ProjectSchedule
                         break;
 
                     }
+
+
 
                     tli[i].Focus();
                     tli[i].GetElementsByTagName("button")[0].InvokeMember("click");
