@@ -209,6 +209,8 @@ namespace ProjectSchedule
         static DateTime weatherDate;
         int dayOfWeek;
 
+        Weather.WeatherForm weatherForm;
+
         // 단기예보
         static List<List<string>> weatherInfo1; // 오늘
         static List<List<string>> weatherInfo2; // 내일
@@ -243,7 +245,7 @@ namespace ProjectSchedule
                 if (count == API_COUNT)
                 {
                     isWeatherOpen = true;
-                    Weather.WeatherForm weatherForm = new Weather.WeatherForm();
+                    weatherForm = new Weather.WeatherForm();
                     weatherForm.Show();
                 }
             }            
@@ -264,7 +266,7 @@ namespace ProjectSchedule
         private void Form1_Load(object sender, EventArgs e)
         {
             getWeatherAPI = new Thread(getAPI);
-            //getWeatherAPI.Start();
+            getWeatherAPI.Start();
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -290,7 +292,8 @@ namespace ProjectSchedule
                     btOpenWeatherForm.Enabled = true;
                 }));
 
-                rainAlert();
+                if (isAPI[0] && isAPI[1] && isAPI[2] && isAPI[3])
+                    rainAlert();
                 
                 Thread.Sleep(100);
                 this.Invoke(new MethodInvoker(delegate
@@ -302,7 +305,6 @@ namespace ProjectSchedule
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                throw;
             }
         }
 
@@ -315,7 +317,6 @@ namespace ProjectSchedule
             url += "&pageNo=1";
             url += "&dataType=XML";
             url += "&base_date=" + weatherDate.AddDays(-1).ToString("yyyyMMdd");
-
             url += "&base_time=2300";
             url += "&nx=61"; // 서울특별시 노원구 월계동 좌표
             url += "&ny=128";
@@ -603,6 +604,8 @@ namespace ProjectSchedule
             if (weatherSettingResult == DialogResult.OK)
             {
                 rainAlert();
+                if (isWeatherOpen)
+                    weatherForm.updateRainAlert();
             }
         }
 
