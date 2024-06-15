@@ -58,7 +58,7 @@ namespace ProjectSchedule
                     return -1;
             }
 
-            return (35 + 87 * temp);
+            return (36 + (86 * temp));
         }
 
         public int dayToPosition(DayOfWeek day)
@@ -92,7 +92,7 @@ namespace ProjectSchedule
                     return -1;
             }
 
-            return (35 + 87 * temp);
+            return (36 + (86 * temp));
         }
     }
 }

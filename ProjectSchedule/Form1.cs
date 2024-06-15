@@ -145,25 +145,60 @@ namespace ProjectSchedule
         private void addLabel(ForDisplay fd)
         {
             Label scheduleLabel = new Label();
+            Label alarmBar;
             scheduleLabel.Text = fd.displayText;
             scheduleLabel.Location = new Point(dayToPosition(DateTime.Parse(fd.startDay).DayOfWeek), timeToPosition(fd.getStartTimeToInt())); // 레이블의 위치 설정
 
             if (fd.getEndTimeToInt() == null)
             {
-                scheduleLabel.Size = new Size(87, 100);
+                scheduleLabel.Size = new Size(80, 50);
             }
             else
             {
-                scheduleLabel.Size = new Size(87, timeToPosition(fd.getEndTimeToInt()) - timeToPosition(fd.getStartTimeToInt())); // 레이블의 크기 설정
+                scheduleLabel.Size = new Size(80, timeToPosition(fd.getEndTimeToInt()) - timeToPosition(fd.getStartTimeToInt())); // 레이블의 크기 설정
             }
 
-            scheduleLabel.BackColor = Color.White;
+            if (fd.type == "알람")
+            {
+                scheduleLabel.BackColor = Color.FromArgb(247, 247, 247);
+                scheduleLabel.Location = new Point(dayToPosition(DateTime.Parse(fd.startDay).DayOfWeek), timeToPosition(fd.getStartTimeToInt()) + 7);
+                alarmBar = new Label();
+                alarmBar.Text = string.Empty;
+                alarmBar.Location = new Point(dayToPosition(DateTime.Parse(fd.startDay).DayOfWeek), timeToPosition(fd.getStartTimeToInt()));
+                alarmBar.Size = new Size(80, 7);
+                alarmBar.BackColor = Color.FromArgb(0, 255, 153);
+
+                alarmBar.Name = "scheduleLabel_" + fd.type.GetHashCode();
+                this.Controls.Add(alarmBar);
+                this.Controls.SetChildIndex(alarmBar, 0);
+            }
+            if (fd.type == "반복성 일정")
+            {
+                scheduleLabel.BackColor = Color.FromArgb(255, 204, 204);
+            }
+            if (fd.type == "일회성 일정")
+            {
+                scheduleLabel.BackColor = Color.FromArgb(204, 204, 255);
+            }
+            if (fd.type == "수업")
+            {
+                scheduleLabel.BackColor = Color.FromArgb(255, 255, 153);
+            }
 
             // schedule 표시하는 레이블 구분용
             scheduleLabel.Name = "scheduleLabel_" + fd.GetHashCode();
 
+            scheduleLabel.MouseHover += MouseHoverEvent_ScheduleLabel;
+
             this.Controls.Add(scheduleLabel); // 폼에 레이블 추가
             this.Controls.SetChildIndex(scheduleLabel, 0);
+        }
+
+        private void MouseHoverEvent_ScheduleLabel(object sender, EventArgs e)
+        {
+            Label lb = sender as Label;
+            ToolTip ttip = new ToolTip();
+            ttip.SetToolTip(lb, lb.Text);
         }
 
         private void addEditButton_Click(object sender, EventArgs e)
@@ -178,14 +213,14 @@ namespace ProjectSchedule
             subjectTime = l2;
             CommitDay = l3;
 
-/*            foreach (string s in l1)
-                Console.WriteLine(s);
+            /*            foreach (string s in l1)
+                            Console.WriteLine(s);
 
-            foreach (string s in l2)
-                Console.WriteLine(s);
+                        foreach (string s in l2)
+                            Console.WriteLine(s);
 
-            foreach (string[] s in l3)
-                Console.WriteLine(string.Join(" ",s));*/
+                        foreach (string[] s in l3)
+                            Console.WriteLine(string.Join(" ",s));*/
         }
 
         private void klasButton_Click(object sender, EventArgs e)
