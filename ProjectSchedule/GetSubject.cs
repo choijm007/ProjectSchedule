@@ -318,6 +318,7 @@ namespace ProjectSchedule
             #region 별표 자료 추가
             HtmlElementCollection ttd2 = null;
             string star_img_src = "/assets/custom/images/icon-star.png";
+            no_star = 1;
 
             if (ttd[0].InnerHtml.Contains(star_img_src))
             {
@@ -367,12 +368,11 @@ namespace ProjectSchedule
             list_button.InvokeMember("click");
             await Task.Delay(3000);
 
-            name = doc.GetElementById(tableid);
-            ttr = name.GetElementsByTagName("tr");
-            ttd = ttr[no_star].GetElementsByTagName("td");
-
             if (no_star > 1 && ttd2 != null)
             {
+                name = doc.GetElementById(tableid);
+                ttr = name.GetElementsByTagName("tr");
+                ttd = ttr[no_star].GetElementsByTagName("td");
                 ttd[1].InvokeMember("click");
                 // download = new Dictionary<string, HtmlElement>();
                 do
