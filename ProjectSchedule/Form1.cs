@@ -273,13 +273,13 @@ namespace ProjectSchedule
                     else if (rytl[0] == 6) { stime[0] = 16; stime[1] = 30; }
 
                     if (rytl[rytl.Count - 1] == -1) { etime[0] = 8; }
-                    else if (rytl[rytl.Count - 1] == 0) { etime[0] = 9; }
-                    else if (rytl[rytl.Count - 1] == 1) { etime[0] = 10; etime[1] = 30; }
-                    else if (rytl[rytl.Count - 1] == 2) { etime[0] = 12; }
-                    else if (rytl[rytl.Count - 1] == 3) { etime[0] = 13; etime[1] = 30; }
-                    else if (rytl[rytl.Count - 1] == 4) { etime[0] = 15; }
-                    else if (rytl[rytl.Count - 1] == 5) { etime[0] = 16; etime[1] = 30; }
-                    else { etime[0] = 18; }
+                    else if (rytl[rytl.Count - 1] == 0) { etime[0] = 8; etime[1] = 45; }
+                    else if (rytl[rytl.Count - 1] == 1) { etime[0] = 10; etime[1] = 15; }
+                    else if (rytl[rytl.Count - 1] == 2) { etime[0] = 11; etime[1] = 45; }
+                    else if (rytl[rytl.Count - 1] == 3) { etime[0] = 13; etime[1] = 15; }
+                    else if (rytl[rytl.Count - 1] == 4) { etime[0] = 14; etime[1] = 45; }
+                    else if (rytl[rytl.Count - 1] == 5) { etime[0] = 16; etime[1] = 15; }
+                    else { etime[0] = 17; etime[1] = 45; }
 
                     classtemp.repeatList.Add(new RepeatTime(classtemp.createRepeatTimeId())
                     {
