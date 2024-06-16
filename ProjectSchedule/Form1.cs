@@ -262,7 +262,7 @@ namespace ProjectSchedule
                         if (stemp[j] != ',') { rytl.Add(int.Parse(stemp[j].ToString())); }
                     }
 
-                    if (rytl.Count == 1) { rytl.Add(rytl[0] + 1); }
+                    // if (rytl.Count == 1) { rytl.Add(rytl[0] + 1); }
 
                     if (rytl[0] == 0) { stime[0] = 8; }
                     else if (rytl[0] == 1) { stime[0] = 9; }
@@ -272,7 +272,7 @@ namespace ProjectSchedule
                     else if (rytl[0] == 5) { stime[0] = 15; }
                     else if (rytl[0] == 6) { stime[0] = 16; stime[1] = 30; }
 
-                    if (rytl[rytl.Count - 1] == -1) { etime[0] = 8; }
+                    if (rytl[rytl.Count - 1] == -7) { etime[0] = 8; }
                     else if (rytl[rytl.Count - 1] == 0) { etime[0] = 8; etime[1] = 45; }
                     else if (rytl[rytl.Count - 1] == 1) { etime[0] = 10; etime[1] = 15; }
                     else if (rytl[rytl.Count - 1] == 2) { etime[0] = 11; etime[1] = 45; }
