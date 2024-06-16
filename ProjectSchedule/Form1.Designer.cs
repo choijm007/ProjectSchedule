@@ -43,6 +43,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tooltip = new System.Windows.Forms.ToolTip(this.components);
             this.btAlertSetting = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // klasButton
@@ -199,11 +200,21 @@
             this.btAlertSetting.Visible = false;
             this.btAlertSetting.Click += new System.EventHandler(this.btAlertSetting_Click);
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(35, 656);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox1.Size = new System.Drawing.Size(609, 81);
+            this.textBox1.TabIndex = 17;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(660, 651);
+            this.ClientSize = new System.Drawing.Size(660, 749);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.btAlertSetting);
             this.Controls.Add(this.progressBarLoadAPI);
             this.Controls.Add(this.btOpenWeatherForm);
@@ -222,6 +233,7 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -241,6 +253,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.ToolTip tooltip;
         private System.Windows.Forms.Button btAlertSetting;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 

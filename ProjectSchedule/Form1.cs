@@ -219,6 +219,17 @@ namespace ProjectSchedule
             subjectTime = l2;
             CommitDay = l3;
 
+            if(CommitDay.Count == 0)
+            {
+                textBox1.Text = "남아있는 과제가 없습니다.";
+            }
+
+            foreach (string[] s in CommitDay)
+            {
+                textBox1.Text += String.Join(" ", s);
+                textBox1.Text += "\r\n\r\n";
+            }
+
             DateTime today = DateTime.Today;
             DateTime startDate = new DateTime(today.Year, 3, 1);
             DateTime endDate = new DateTime(today.Year, 6, 21);
