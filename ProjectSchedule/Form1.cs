@@ -10,14 +10,19 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices.ComTypes;
 using System.Security.Policy;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media.Animation;
+using System.Windows.Shapes;
 using System.Windows.Shell;
 using System.Xml;
+using static System.Windows.Forms.LinkLabel;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 
 namespace ProjectSchedule
 {
@@ -26,6 +31,7 @@ namespace ProjectSchedule
         List<string> subjectName = new List<string>();
         List<string> subjectTime = new List<string>();
         List<string[]> CommitDay = new List<string[]>();
+        List<int> KWUnivClassID = new List<int>();
 
         public Form1()
         {
@@ -212,6 +218,85 @@ namespace ProjectSchedule
             subjectName = l1;
             subjectTime = l2;
             CommitDay = l3;
+
+            DateTime today = DateTime.Today;
+            DateTime startDate = new DateTime(today.Year, 3, 1);
+            DateTime endDate = new DateTime(today.Year, 6, 21);
+
+
+            if ((today >= startDate) && (today <= endDate)) { }
+            else
+            {
+                startDate = new DateTime(today.Year, 9, 1);
+                endDate = new DateTime(today.Year, 12, 20);
+            }
+
+
+            for (int i = 0; i < l1.Count; i++)
+            {
+                ClassSchedule classtemp = new ClassSchedule(0);
+
+                classtemp.name = l1[i].Substring(0, l1[i].IndexOf(" ("));
+                classtemp.startDay = startDate;
+                classtemp.endDay = endDate;
+
+                string pattern = @"[가-힣] \d+(,\d+)*교시";
+                MatchCollection matches = Regex.Matches(l2[i], pattern);
+
+
+                foreach (Match match in matches)
+                {
+                    DateTime dtemp;
+                    List<int> rytl = new List<int>();
+                    int[] stime = new int[]{ 0, 0 };
+                    int[] etime = new int[]{ 24, 0 };
+                    string stemp = match.Value;
+                    if (stemp[0] == '월') { dtemp = new DateTime(2024, 6, 10); }
+                    else if (stemp[0] == '화') { dtemp = new DateTime(2024, 6, 11); }
+                    else if (stemp[0] == '수') { dtemp = new DateTime(2024, 6, 12); }
+                    else if (stemp[0] == '목') { dtemp = new DateTime(2024, 6, 13); }
+                    else { dtemp = new DateTime(2024, 6, 14); }
+
+                    for (int j = 2; j < stemp.IndexOf("교시"); j++)
+                    {
+                        if (stemp[j] != ',') { rytl.Add(int.Parse(stemp[j].ToString())); }
+                    }
+
+                    if (rytl.Count == 1) { rytl.Add(rytl[0] + 1); }
+
+                    if (rytl[0] == 0) { stime[0] = 8; }
+                    else if (rytl[0] == 1) { stime[0] = 9; }
+                    else if (rytl[0] == 2) { stime[0] = 10; stime[1] = 30; }
+                    else if (rytl[0] == 3) { stime[0] = 12; }
+                    else if (rytl[0] == 4) { stime[0] = 13; stime[1] = 30; }
+                    else if (rytl[0] == 5) { stime[0] = 15; }
+                    else if (rytl[0] == 6) { stime[0] = 16; stime[1] = 30; }
+
+                    if (rytl[rytl.Count - 1] == 0) { etime[0] = 8; }
+                    else if (rytl[rytl.Count - 1] == 1) { etime[0] = 9; }
+                    else if (rytl[rytl.Count - 1] == 2) { etime[0] = 10; etime[1] = 30; }
+                    else if (rytl[rytl.Count - 1] == 3) { etime[0] = 12; }
+                    else if (rytl[rytl.Count - 1] == 4) { etime[0] = 13; etime[1] = 30; }
+                    else if (rytl[rytl.Count - 1] == 5) { etime[0] = 15; }
+                    else if (rytl[rytl.Count - 1] == 6) { etime[0] = 16; etime[1] = 30; }
+                    else { etime[0] = 18; }
+
+                    classtemp.repeatList.Add(new RepeatTime(classtemp.createRepeatTimeId())
+                    {
+                        date = dtemp,
+                        startHour = stime[0],
+                        startMinute = stime[1],
+                        endHour = etime[0],
+                        endMinute = etime[1]
+                    });
+                }
+
+                ScheduleList.list.Add(classtemp);
+
+            }
+
+            update();
+
 
             /*            foreach (string s in l1)
                             Console.WriteLine(s);

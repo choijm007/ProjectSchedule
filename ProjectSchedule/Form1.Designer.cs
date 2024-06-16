@@ -38,8 +38,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.deadlineListBox = new System.Windows.Forms.ListBox();
-            this.takingClassesListView = new System.Windows.Forms.ListView();
             this.btOpenWeatherForm = new System.Windows.Forms.Button();
             this.progressBarLoadAPI = new System.Windows.Forms.ProgressBar();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -130,25 +128,6 @@
             this.label7.Text = "일요일";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // deadlineListBox
-            // 
-            this.deadlineListBox.Font = new System.Drawing.Font("굴림", 12F);
-            this.deadlineListBox.FormattingEnabled = true;
-            this.deadlineListBox.ItemHeight = 16;
-            this.deadlineListBox.Location = new System.Drawing.Point(13, 657);
-            this.deadlineListBox.Name = "deadlineListBox";
-            this.deadlineListBox.Size = new System.Drawing.Size(631, 148);
-            this.deadlineListBox.TabIndex = 11;
-            // 
-            // takingClassesListView
-            // 
-            this.takingClassesListView.HideSelection = false;
-            this.takingClassesListView.Location = new System.Drawing.Point(13, 811);
-            this.takingClassesListView.Name = "takingClassesListView";
-            this.takingClassesListView.Size = new System.Drawing.Size(631, 131);
-            this.takingClassesListView.TabIndex = 12;
-            this.takingClassesListView.UseCompatibleStateImageBehavior = false;
-            // 
             // btOpenWeatherForm
             // 
             this.btOpenWeatherForm.Enabled = false;
@@ -224,12 +203,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(660, 950);
+            this.ClientSize = new System.Drawing.Size(660, 651);
             this.Controls.Add(this.btAlertSetting);
             this.Controls.Add(this.progressBarLoadAPI);
             this.Controls.Add(this.btOpenWeatherForm);
-            this.Controls.Add(this.takingClassesListView);
-            this.Controls.Add(this.deadlineListBox);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -259,8 +236,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ListBox deadlineListBox;
-        private System.Windows.Forms.ListView takingClassesListView;
         private System.Windows.Forms.Button btOpenWeatherForm;
         private System.Windows.Forms.ProgressBar progressBarLoadAPI;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;

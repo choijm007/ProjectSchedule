@@ -211,6 +211,7 @@ namespace ProjectSchedule
         { this.id = id; this.type = type; }
     }
 
+
     public class ForDisplay
     {
         public readonly int id;
