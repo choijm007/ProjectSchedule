@@ -65,7 +65,7 @@ namespace ProjectSchedule
                 newAlert.Dock = DockStyle.Right;
                 //newAlert.AutoSize = false;
                 newAlert.Margin = new Padding(0, 0, 0, 0);
-                newAlert.Size = new Size(7, 23);
+                newAlert.Size = new Size(5, 23);
                 newAlert.BackColor = Color.Red;
                 newAlert.MouseMove += control_MouseMove;
                 labelList.Add(newAlert);
